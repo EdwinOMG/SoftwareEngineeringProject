@@ -193,5 +193,16 @@
       <!-- The check is suppressed in the next line of code after the comment -->
       <property name="influenceFormat" value="1"/>
     </module>
+
+    <module name="EmptyMethod"/>
+
+    <module name="NoWhiteSpaceBefore">
+      <property name="tokens" value="LITERAL_IF, LITERAL_ELSE, LITERAL_WHILE, LITERAL_FOR"/>
+    </module>
+
+    <module name="Indentation">
+      <property name="indent" value="4"/>
+    </module>
+
   </module>
 </module>

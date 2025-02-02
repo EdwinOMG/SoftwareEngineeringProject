@@ -194,7 +194,7 @@
       <property name="influenceFormat" value="1"/>
     </module>
 
-    <module name="EmptyMethod"/>
+    <module name="EmptyMethodCheck"/>
 
     <module name="NoWhiteSpaceBefore">
       <property name="tokens" value="LITERAL_IF, LITERAL_ELSE, LITERAL_WHILE, LITERAL_FOR"/>

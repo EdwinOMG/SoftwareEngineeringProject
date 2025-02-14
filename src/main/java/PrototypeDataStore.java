@@ -26,7 +26,7 @@ public class PrototypeDataStore {
 
 		//if it fails it will print damn...
 		if (outputResult.getStatus() != OutputResult.ShowResultStatus.SUCCESS) {
-			System.out.println("Damn...");
+			System.out.println("FAILED");
 		}
 }
 }

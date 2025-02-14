@@ -19,7 +19,7 @@ public class ComputationHandlerPrototype {
 		/** - ComputeRequest could be an interface with an anonymous inner class,
 		      allowing flexibility in defining the default delimiter.
 		      Alternatively, an overloaded constructor could handle this.**/
-		.
+		
 		ComputeRequest request = new ComputeRequest(inputConfig, outputConfig, ',');
 
 		/** - Execute the computation with the assembled inputs. **/		
@@ -31,6 +31,6 @@ public class ComputationHandlerPrototype {
 			System.out.println("Much Success ");
 		}
 
-		// This completes the workflow from the client’s perspective.
+		
 	}
 }

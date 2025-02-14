@@ -30,7 +30,7 @@ public class ComputationHandlerPrototype {
 		if (result.getStatus().isSuccess()) {
 			System.out.println("Much Success ");
 		}
-
+				
 		
 	}
 }

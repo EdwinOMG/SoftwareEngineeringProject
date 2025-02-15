@@ -1,14 +1,5 @@
-@ConceptualAPI
-public interface ComputeEngine { 
-  String compute(int value);                              
-} 
-public class ComputeEnginePrototype { 
-  @ConceptualAPIPrototype
-  public void prototype(ComputeEngine engine) { 
-    String result = engine.compute(1); 
-  } 
-} 
-public class ComputeRequest { 
+
+public interface ComputeRequest { 
   private static final char DEFAULT_DELIMITER = ';'; 
   private final InputConfig inputConfig; 
   public class ComputeRequest { 
@@ -34,11 +25,5 @@ public class ComputeRequest {
       return outputConfig; 
     } 
   }
-
-public interface ComputeResult { 
-  static ComputeResult SUCCESS = () -> ComputeResultStatus.SUCCESS; 
-  static ComputeResult FAILURE = () -> ComputeResultStatus.FAILURE; 
-  ComputeResultStatus getStatus();
-}
 
 

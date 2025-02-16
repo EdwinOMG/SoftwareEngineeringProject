@@ -1,4 +1,4 @@
-public class ComputeEnginePrototype { 
+public interface ComputeEnginePrototype { 
   @ConceptualAPIPrototype
   public void prototype(ComputeEngine engine) { 
     String result = engine.compute(1); 

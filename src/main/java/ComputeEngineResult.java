@@ -1,7 +1,7 @@
 package main.java;
 
 public interface ComputeEngineResult {
-	
+	// shows us whether the computation succeeded
 	ComputeEngineResultStatus getStatus();
 	
 	static ComputeEngineResult SUCCESS = () -> ComputeEngineResultStatus.SUCCESS;

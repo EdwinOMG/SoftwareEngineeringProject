@@ -1,7 +1,8 @@
 package main.java;
-
+// request to the engine
 public class ComputeEngineRequest {
-	
+	// input and output config to store the configuration
+	//has getters and setters
 	private InputConfig input;
 	private OutputConfig output;
 	

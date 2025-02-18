@@ -10,5 +10,5 @@ import main.java.project.annotations.NetworkAPI;
 @NetworkAPI 
 public interface ComputationHandler {
 	
-    ComputeResult compute(ComputeRequest request);
+    ComputeEngineResult compute(ComputeEngineRequest request);
 }

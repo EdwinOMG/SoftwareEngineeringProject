@@ -20,10 +20,10 @@ public class ComputationHandlerPrototype {
 		      allowing flexibility in defining the default delimiter.
 		      Alternatively, an overloaded constructor could handle this.**/
 		
-		ComputeRequest request = new ComputeRequest(inputConfig, outputConfig, ',');
+		ComputeEngineRequest request = new ComputeEngineRequest(inputConfig, outputConfig, ',');
 
 		/** - Execute the computation with the assembled inputs. **/		
-		ComputeResult result = apiToCall.compute(request);
+		ComputeEngineResult result = apiToCall.compute(request);
 
 		/** - Using an enum to wrap a boolean success value.
 		    - This will allow for a more detailed definition of what a failure is. **/

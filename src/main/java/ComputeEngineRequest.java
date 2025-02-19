@@ -3,6 +3,7 @@ package main.java;
 public class ComputeEngineRequest {
 	// input and output config to store the configuration
 	//has getters and setters
+	//basically a data wrapper
 	private InputConfig input;
 	private OutputConfig output;
 	

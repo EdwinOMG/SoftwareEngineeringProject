@@ -10,6 +10,11 @@ public interface ComputeEngineResult {
 	public static enum ComputeEngineResultStatus {
 		SUCCESS,
 		FAIL;
+
+		boolean isSuccess() {
+			// TODO Auto-generated method stub
+			return false;
+		}
 	}
 		
 }

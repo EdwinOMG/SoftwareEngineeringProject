@@ -7,7 +7,7 @@ public class PrototypeComputeEngine {
 	
 	@ConceptualAPIPrototype
 	public void prototype(ComputeEngine engine) {
-		String result = engine.compute(5); //test how it processes an input
+		Iterable<Integer> result = engine.compute(5); //test how it processes an input
 		
 	}
 }

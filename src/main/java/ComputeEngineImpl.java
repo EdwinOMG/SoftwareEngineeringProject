@@ -1,11 +1,12 @@
 package main.java;
 
+import java.util.List;
+
 public class ComputeEngineImpl  implements ComputeEngine{
 
-	@Override //keep as string, assuming output may be in ( a --> b --> c)
-	public String compute(int number) {
-		return "";
+	@Override
+	public Iterable<Integer> compute(int i){
+		return List.of(i); //List of just i
 	}
-	
 
 }

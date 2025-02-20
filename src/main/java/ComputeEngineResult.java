@@ -2,6 +2,7 @@ package main.java;
 
 public interface ComputeEngineResult {
 	// shows us whether the computation succeeded
+	//basically a data wrapper
 	ComputeEngineResultStatus getStatus();
 	
 	static ComputeEngineResult SUCCESS = () -> ComputeEngineResultStatus.SUCCESS;

@@ -9,8 +9,8 @@ package main.java;
  		/** - Using an anonymous inner class.
  		    - CLient will get input data from various sources 
  		      (e.g., List<Integers>, a file, or a database). **/
- 		InputConfig inputConfig = new InputConfig() {
- 		};
+ 		InputConfig inputConfig = null;
+
 
  		/** -Using null for OutputConfig as a placeholder until the implementation is
  		    decided.**/

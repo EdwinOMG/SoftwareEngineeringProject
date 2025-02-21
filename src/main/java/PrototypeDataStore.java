@@ -7,13 +7,14 @@ public class PrototypeDataStore {
 	@ProcessAPIPrototype
 	public void prototype(DataStore dataStore) {
 
-		InputConfig inputConfig = new InputConfig() {
-			
-		};
+		InputConfig inputConfig = new InputConfig();
 		
-		OutputConfig outputConfig = new OutputConfig() {
 			
-		};
+		
+		
+		OutputConfig outputConfig = null;
+			
+		
 	
 		// reads in data
 		Iterable<Integer> readData = dataStore.read(inputConfig);

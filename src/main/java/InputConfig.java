@@ -1,5 +1,10 @@
 package main.java;
 
-public interface InputConfig {
+public class InputConfig {
+
+	int getValue() {
+		return 0;
+	} // grabs value
 // need to implement
+	
 }

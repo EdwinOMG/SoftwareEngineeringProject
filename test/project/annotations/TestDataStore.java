@@ -16,24 +16,26 @@ public class TestDataStore {
     private OutputConfig mockOutputConfig;
     private OutputResult mockOutputResult;
     @Before
-    public void setUp() { //interfaces used in data store mockInputConfig = mock(InputConfig.class); mockOutputConfig = mock(OutputConfig.class); mockOutputResult = mock(OutputResult.class); // creates data store api dataStore = mock(DataStore.class); }
-        @Test
-        public void testReadMethodReturnsIterable() {
+    public void setUp() { //interfaces used in data store 
+        mockInputConfig = mock(InputConfig.class); 
+        mockOutputConfig = mock(OutputConfig.class); 
+        mockOutputResult = mock(OutputResult.class); // 
+        creates data store api dataStore = mock(DataStore.class); 
+    }
+    @Test
+    public void testReadMethodReturnsIterable() {
             Iterable<Integer> mockData = List.of(44);
             when(dataStore.read(mockInputConfig)).thenReturn(mockData);
             Iterable<Integer> result = dataStore.read(mockInputConfig);
             assertNotNull(result);
             assertEquals(mockData, result);
-        }
-
-        @Test 
-        public void testAppendResult() {
+    }
+    @Test 
+    public void testAppendResult() {
             when(dataStore.appendResult(mockOutputConfig, List.of(44))).thenReturn(mockOutputResult);
             when(mockOutputResult.getStatus()).thenReturn(OutputResult.ShowResultStatus.SUCCESS);
             OutputResult result = dataStore.appendResult(mockOutputConfig, List.of(44));
             assertNotNull(result);
             assertEquals(OutputResult.ShowResultStatus.SUCCESS, result.getStatus());
-        }
-
     }
 }

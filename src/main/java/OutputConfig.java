@@ -1,5 +1,7 @@
 package main.java;
 
-public interface OutputConfig {
-	Iterable<Integer> writeOutput();
+public class OutputConfig {
+	Iterable<Integer> writeOutput() {
+		return null;
+	}
 }

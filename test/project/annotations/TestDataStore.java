@@ -23,7 +23,7 @@ public class TestDataStore {
         creates data store api dataStore = mock(DataStore.class); 
     }
     @Test
-    public void testReadMethodReturnsIterable() {
+    public void testReadMethodReturnsIterable(); {
             Iterable<Integer> mockData = List.of(44);
             when(dataStore.read(mockInputConfig)).thenReturn(mockData);
             Iterable<Integer> result = dataStore.read(mockInputConfig);
@@ -31,7 +31,7 @@ public class TestDataStore {
             assertEquals(mockData, result);
     }
     @Test 
-    public void testAppendResult() {
+    public void testAppendResult(); {
             when(dataStore.appendResult(mockOutputConfig, List.of(44))).thenReturn(mockOutputResult);
             when(mockOutputResult.getStatus()).thenReturn(OutputResult.ShowResultStatus.SUCCESS);
             OutputResult result = dataStore.appendResult(mockOutputConfig, List.of(44));

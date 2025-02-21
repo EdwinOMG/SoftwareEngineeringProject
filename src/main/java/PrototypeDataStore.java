@@ -7,7 +7,7 @@ public class PrototypeDataStore {
 	@ProcessAPIPrototype
 	public void prototype(DataStore dataStore) {
 
-		InputConfig inputConfig = new InputConfig();
+		InputConfig inputConfig = null;
 		
 			
 		

@@ -11,7 +11,7 @@ public class TestInputConfig implements InputConfig {
         this.inputValues = inputValues;
     }
 
-    @Override
+    
     // need to create a getIntput() method in InputConfig interface
     public List<Integer> getInput() {
         return inputValues;

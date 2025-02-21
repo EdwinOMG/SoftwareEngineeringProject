@@ -1,10 +1,7 @@
 package main.java;
 
-public class InputConfig {
+import java.util.List;
 
-	int getValue() {
-		return 0;
-	} // grabs value
-// need to implement
-	
+public interface InputConfig {
+    Iterable<Integer> getInput();
 }

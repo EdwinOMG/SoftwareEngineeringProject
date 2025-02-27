@@ -11,7 +11,7 @@ public class DataStoreImpl implements DataStore{
 	
 	//output is a failure status since theres nothing computing
 	@Override
-	public OutputResult appendResult(OutputConfig output, Iterable<Integer> readData) {
+	public OutputResult appendResult(OutputConfig output, Iterable<Integer> result, char delimiter) {
 		return new OutputResult() {
 			@Override
 			public ShowResultStatus getStatus() {

@@ -14,7 +14,7 @@ public class ComputationHandlerImpl implements ComputationHandler {
 	@Override
 	public ComputeEngineResult compute(ComputeEngineRequest request) {
 		
-		return ComputeEngineResult.FAIL; // failing for now since empty
+		return null;
 	}
 	
 }

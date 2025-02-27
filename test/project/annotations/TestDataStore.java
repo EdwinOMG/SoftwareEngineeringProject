@@ -32,9 +32,9 @@ public class TestDataStore {
     }
     @Test 
     public void testAppendResult() {
-            when(dataStore.appendResult(mockOutputConfig, List.of(44))).thenReturn(mockOutputResult);
+            when(dataStore.appendResult(mockOutputConfig, List.of(44), ';')).thenReturn(mockOutputResult);
             when(mockOutputResult.getStatus()).thenReturn(OutputResult.ShowResultStatus.SUCCESS);
-            OutputResult result = dataStore.appendResult(mockOutputConfig, List.of(44));
+            OutputResult result = dataStore.appendResult(mockOutputConfig, List.of(44) , ';');
             assertNotNull(result);
             assertEquals(OutputResult.ShowResultStatus.SUCCESS, result.getStatus());
     }

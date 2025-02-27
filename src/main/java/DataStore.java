@@ -8,7 +8,7 @@ public interface DataStore {
 	Iterable<Integer> read(InputConfig inputConfig);
 
 	//process and write data somewhere
-	OutputResult appendResult(OutputConfig output, Iterable<Integer> readData);
+	OutputResult appendResult(OutputConfig output, Iterable<Integer> result, char delimiter);
 
 	
 	

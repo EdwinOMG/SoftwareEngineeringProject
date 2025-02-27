@@ -11,6 +11,7 @@ public class PrototypeDataStore {
 		
 			
 		
+		char delimiter = ';'; // this line im not sure if should be here but itll be a filler to fill appendresult
 		
 		OutputConfig outputConfig = null;
 			
@@ -23,7 +24,7 @@ public class PrototypeDataStore {
 		
 		// takes in where the data will go, and integers previously read, 
 		//stores the data at the output, and passes on a object to indicate if it was successful
-		OutputResult outputResult = dataStore.appendResult(outputConfig, readData);
+		OutputResult outputResult = dataStore.appendResult(outputConfig, readData, delimiter);
 
 		//if it fails it will print damn...
 		if (outputResult.getStatus() != OutputResult.ShowResultStatus.SUCCESS) {

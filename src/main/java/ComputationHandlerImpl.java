@@ -1,15 +1,21 @@
 package main.java;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import java.util.List;
 
 public class ComputationHandlerImpl implements ComputationHandler {
     
 =======
+=======
+>>>>>>> Stashed changes
 import java.util.ArrayList;
 
 public class ComputationHandlerImpl implements ComputationHandler {
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     private final ComputeEngine computeEngine;
     private final DataStore dataStore;
@@ -21,6 +27,7 @@ public class ComputationHandlerImpl implements ComputationHandler {
 
     @Override
     public ComputeEngineResult compute(ComputeEngineRequest request) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         // Step 1: Read integers from the data store based on the user's input configuration
         Iterable<Integer> data = dataStore.read(request.getInput());
@@ -39,6 +46,8 @@ public class ComputationHandlerImpl implements ComputationHandler {
             ? ComputeEngineResult.SUCCESS 
             : ComputeEngineResult.FAIL;
 =======
+=======
+>>>>>>> Stashed changes
         // Step 1: Read input numbers from the specified location
         Iterable<Integer> numbers = dataStore.read(request.getInputConfig());
 
@@ -72,6 +81,9 @@ public class ComputationHandlerImpl implements ComputationHandler {
             first = false;
         }
         return sb.toString();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 }

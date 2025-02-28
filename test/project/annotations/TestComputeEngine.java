@@ -1,36 +1,36 @@
 package project.annotations;
 
+import main.java.ComputeEngineImpl;
+import main.java.DigitChains;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import main.java.ComputeEngine;
-import main.java.ComputeEngineImpl;
-
 public class TestComputeEngine {
+    private ComputeEngineImpl computeEngine;
 
-	private ComputeEngineImpl computeEngine;
-	
-	@Before
-	public void setUp() {
-		computeEngine = new ComputeEngineImpl();
-	}
-	@Test
-	public void testComputeEngineExists() {
-		assertNotNull(computeEngine); // make sure it exist
-	}
-	
-	@Test 
-	public void testComputeMethodReturnsListOfN() {
-		int input = 5;
-		
-		Iterable<Integer> result = computeEngine.compute(input);
-		assertNotNull("Compute method should be a list of the input");
-		
-	}
-	
+    @Before
+    public void setUp() {
+        computeEngine = new ComputeEngineImpl();
+    }
+
+    @Test
+    public void testComputeEngineExists() {
+        assertNotNull(computeEngine); // Make sure it exists
+    }
+
+    @Test
+    public void testComputeMethodReturnsDigitChains() {
+        // Simulate input data
+        List<Integer> input = List.of(5, 10, 15);
+
+        // Compute the digit chains
+        DigitChains result = computeEngine.compute(input);
+
+        // Verify the result
+        assertNotNull("Compute method should return a non-null result", result);
+    }
 }

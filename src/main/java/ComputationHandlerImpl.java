@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class ComputationHandlerImpl implements ComputationHandler {
 
-    private final ComputeEngine computeEngine;
+    private final ComputeEngine computeEngine1;
     private final DataStore dataStore;
 
     public ComputationHandlerImpl(ComputeEngine computeEngine, DataStore dataStore) {
-        this.computeEngine = computeEngine;
+        this.computeEngine1 = computeEngine;
         this.dataStore = dataStore;
     }
 
@@ -25,7 +25,7 @@ public class ComputationHandlerImpl implements ComputationHandler {
         // Step 2: Compute the number chain for each number
         Iterable<String> results = new ArrayList<>();
         for (int num : numbers) {
-            Iterable<Integer> chain = computeEngine.computeNumberChain(num);
+            Iterable<Integer> chain = computeEngine1.computeNumberChain(num);
             ((ArrayList<String>) results).add(formatChain(num, chain));  // Output full chain
         }
 
@@ -51,18 +51,6 @@ public class ComputationHandlerImpl implements ComputationHandler {
 }
 
 	
-	private final ComputeEngine computeEngine;
-	private final DataStore dataStore;
 	
-	public ComputationHandlerImpl(ComputeEngine computeEngine, DataStore dataStore) {
-		this.computeEngine = computeEngine;
-		this.dataStore = dataStore;
-	}
 	
-	@Override
-	public ComputeEngineResult compute(ComputeEngineRequest request) {
-		
-		return null;
-	}
-	
-}
+

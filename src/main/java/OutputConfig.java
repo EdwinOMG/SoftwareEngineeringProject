@@ -1,7 +1,5 @@
 package main.java;
 
-
 public interface OutputConfig {
-    void writeOutput(Integer output);
-    Iterable<Integer> getOutput();
+    String getFilePath();
 }

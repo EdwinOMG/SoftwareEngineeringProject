@@ -1,23 +1,29 @@
 package main.java;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class DataStoreImpl implements DataStore{
-	//It <integer> for flexibility
-	@Override
-	public Iterable<Integer> read(InputConfig inputConfig) {
-		return null;
-	}
+public class DataStoreImpl implements DataStore {
 
-	
-	//output is a failure status since theres nothing computing
-	@Override
-	public OutputResult appendResult(OutputConfig output, Iterable<Integer> result, char delimiter) {
-		return new OutputResult() {
-			@Override
-			public ShowResultStatus getStatus() {
-				return ShowResultStatus.FAILURE;
-			}
-		};
-	}
+    @Override
+    public Iterable<Integer> read(InputConfig inputConfig) {
+        return inputConfig.getInput();
+    }
 
+    @Override
+    public OutputResult appendResult(OutputConfig outputConfig, DigitChains chains, char delimiter) {
+        for (Iterable<Integer> chain : chains) {
+            for (Integer number : chain) {
+                outputConfig.writeOutput(number); // Write each number to the output config
+                outputConfig.writeOutput((int) delimiter); // Write the delimiter as an integer
+            }
+        }
+
+        return new OutputResult() {
+            @Override
+            public ShowResultStatus getStatus() {
+                return ShowResultStatus.SUCCESS;
+            }
+        };
+    }
 }

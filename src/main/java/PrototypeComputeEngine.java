@@ -1,13 +1,17 @@
 package main.java;
 
-import main.java.project.annotations.ConceptualAPIPrototype;
-// takes in instance of computEengine
+import java.util.List;
+
 public class PrototypeComputeEngine {
 
-	
-	@ConceptualAPIPrototype
-	public void prototype(ComputeEngine engine) {
-		Iterable<Integer> result = engine.compute(5); //test how it processes an input
-		
-	}
+    public void prototype(ComputeEngine computeEngine) {
+        // Simulate input data (e.g., a list of numbers to process)
+        List<Integer> inputNumbers = List.of(44, 32, 15); // Example input
+
+        // Execute the computation using the provided ComputeEngine
+        DigitChains chains = computeEngine.compute(inputNumbers);
+
+        // Print the computed chains (for debugging or demonstration purposes)
+        
+    }
 }

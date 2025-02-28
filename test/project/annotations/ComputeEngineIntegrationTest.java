@@ -1,6 +1,7 @@
 package project.annotations;
 
 import org.junit.Before;
+import project.annotations.*;
 import org.junit.Test;
 import main.java.ComputeEngine;
 import main.java.ComputeEngineImpl;

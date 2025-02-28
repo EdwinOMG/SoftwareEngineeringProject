@@ -1,3 +1,4 @@
+package project.annotations;
 import java.util.Arrays;
 
 public class TestInputConfig implements InputConfig {

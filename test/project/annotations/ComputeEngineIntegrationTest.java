@@ -15,7 +15,7 @@ import static org.junit.Assert.assertFalse;
 public class ComputeEngineIntegrationTest {
     private ComputeEngine computeEngine;
     private DataStoreImpl dataStore;
-
+    char delimiter = ';';
     @Before
     public void setUp() {
         computeEngine = new ComputeEngineImpl();
@@ -28,7 +28,7 @@ public class ComputeEngineIntegrationTest {
         TestInputConfig inputConfig = new TestInputConfig(inputData);
         TestOutputConfig outputConfig = new TestOutputConfig();
 
-        dataStore.appendResult(outputConfig, inputData);
+        dataStore.appendResult(outputConfig, inputData, delimiter);
 
         Iterable<Integer> result = computeEngine.compute(inputData.get(0));
         assertNotNull("Result should not be null", result);

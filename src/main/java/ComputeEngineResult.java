@@ -1,20 +1,38 @@
 package main.java;
 
 public interface ComputeEngineResult {
-	// shows us whether the computation succeeded
-	//basically a data wrapper
-	ComputeEngineResultStatus getStatus();
+	static ComputeEngineResult SUCCESS = new ComputeEngineResult() {
 	
-	static ComputeEngineResult SUCCESS = () -> ComputeEngineResultStatus.SUCCESS;
-	static ComputeEngineResult FAIL = () -> ComputeEngineResultStatus.FAIL;
+		@Override
+		public ComputeEngineResultStatus getStatus() {
+			return ComputeEngineResultStatus.SUCCESS; 
+		}
+		
+		@Override
+		public String getFailureMessage() { 
+			return ""; 
+		}
+		
+	};
+	
+	
+	ComputeEngineResultStatus getStatus();
+	String getFailureMessage();
 	
 	public static enum ComputeEngineResultStatus {
-		SUCCESS,
-		FAIL;
-
-		boolean isSuccess() {
-			// TODO Auto-generated method stub
-			return false;
+		SUCCESS(true),
+		FAIL(false),
+		INVALID_REQUEST(false);
+		
+		private final boolean success;
+		
+		private ComputeEngineResultStatus(boolean success) { 
+			this.success = success; 
+			}
+		
+		
+		public boolean isSuccess() {
+			return success;
 		}
 	}
 		

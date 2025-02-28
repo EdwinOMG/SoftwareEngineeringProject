@@ -1,3 +1,4 @@
+package project.annotations;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class TestIntegDataStore implements DataStore {
     }
 
     @Override
-    public OutputResult appendResult(OutputConfig outputConfig, Iterable<Integer> readData) {
+    public OutputResult appendResult(OutputConfig outputConfig, Iterable<Integer> readData , char delimiter) {
         List<Integer> processedResults = new ArrayList<>();
 
         // Process the integers and write to outputConfig using writeOutput(Integer)

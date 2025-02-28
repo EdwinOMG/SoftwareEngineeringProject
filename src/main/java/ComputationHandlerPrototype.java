@@ -1,39 +1,30 @@
 package main.java;
 
- import main.java.project.annotations.NetworkAPIPrototype;
+import main.java.project.annotations.NetworkAPIPrototype;
 
- public class ComputationHandlerPrototype {
+import java.util.ArrayList;
+import java.util.List;
 
- 	@NetworkAPIPrototype 
- 	public void prototype(ComputationHandler apiToCall) {
- 		/** - Using an anonymous inner class.
- 		    - CLient will get input data from various sources 
- 		      (e.g., List<Integers>, a file, or a database). **/
- 		InputConfig inputConfig = null;
+public class ComputationHandlerPrototype {
 
+    @NetworkAPIPrototype
+    public void prototype(ComputationHandler apiToCall) {
+        List<Integer> inputNumbers = List.of(44, 32, 15);
+        InputConfig inputConfig = () -> inputNumbers;
+        List<Integer> outputData = new ArrayList<>();
+        OutputConfig outputConfig = result -> outputData.add(result);
+        ComputeEngineRequest request = new ComputeEngineRequest(inputConfig, outputConfig);
+        ComputeEngineResult result = apiToCall.compute(request);
 
- 		/** -Using null for OutputConfig as a placeholder until the implementation is
- 		    decided.**/
- 		OutputConfig outputConfig = null;
-
- 		/** - ComputeRequest could be an interface with an anonymous inner class,
- 		      allowing flexibility in defining the default delimiter.
- 		      Alternatively, an overloaded constructor could handle this.**/
-
- 		ComputeEngineRequest request = new ComputeEngineRequest(inputConfig, outputConfig);
- 		
-
- 		/** - Execute the computation with the assembled inputs. **/		
- 		ComputeEngineResult result = apiToCall.compute(request);
- 		
-		/** - Using an enum to wrap a boolean success value.
-
-
-		    - This will allow for a more detailed definition of what a failure is. **/
-		if (result.getStatus().isSuccess()) {
-			System.out.println("Much Success ");
-		}
-
-
-	}
-} 
+        if (result.getStatus().isSuccess()) {
+            System.out.println("Computation succeeded!");
+            System.out.println("Output Data:");
+            for (Integer number : outputData) {
+                System.out.print(number + " ");
+            }
+            System.out.println();
+        } else {
+            System.out.println("Computation failed.");
+        }
+    }
+}

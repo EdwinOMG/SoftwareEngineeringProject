@@ -4,7 +4,5 @@ import main.java.project.annotations.ConceptualAPI;
 
 @ConceptualAPI
 public interface ComputeEngine {
-
-	Iterable<Integer> compute(int i);
-	
+    DigitChains compute(Iterable<Integer> input);
 }

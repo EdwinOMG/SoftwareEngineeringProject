@@ -2,33 +2,33 @@ package main.java;
 
 import main.java.project.annotations.ProcessAPIPrototype;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrototypeDataStore {
-	// datastore is the api
-	@ProcessAPIPrototype
-	public void prototype(DataStore dataStore) {
 
-		InputConfig inputConfig = null;
-		
-			
-		
-		char delimiter = ';'; // this line im not sure if should be here but itll be a filler to fill appendresult
-		
-		OutputConfig outputConfig = null;
-			
-		
-	
-		// reads in data
-		Iterable<Integer> readData = dataStore.read(inputConfig);
-			
-		//do something with readdata 
-		
-		// takes in where the data will go, and integers previously read, 
-		//stores the data at the output, and passes on a object to indicate if it was successful
-		OutputResult outputResult = dataStore.appendResult(outputConfig, readData, delimiter);
+    @ProcessAPIPrototype
+    public void prototype(DataStore dataStore) {
+        List<Integer> inputNumbers = List.of(44, 32, 15);
+        InputConfig inputConfig = () -> inputNumbers;
+        List<Integer> outputData = new ArrayList<>();
+        OutputConfig outputConfig = result -> outputData.add(result);
+        char delimiter = ';';
 
-		//if it fails it will print damn...
-		if (outputResult.getStatus() != OutputResult.ShowResultStatus.SUCCESS) {
-			System.out.println("FAILED");
-		}
-}
+        Iterable<Integer> readData = dataStore.read(inputConfig);
+        DigitChains chains = new DigitChains(List.of(readData)); // Wrap the read data in DigitChains
+
+        OutputResult outputResult = dataStore.appendResult(outputConfig, chains, delimiter);
+
+        if (outputResult.getStatus() != OutputResult.ShowResultStatus.SUCCESS) {
+            System.out.println("FAILED");
+        } else {
+            System.out.println("SUCCESS");
+            System.out.println("Output Data:");
+            for (Integer number : outputData) {
+                System.out.print(number + " ");
+            }
+            System.out.println();
+        }
+    }
 }

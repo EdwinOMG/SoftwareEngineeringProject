@@ -1,20 +1,11 @@
-package project.annotations;
-
-
-import java.util.List;
-
-import main.java.InputConfig;
+import java.util.Arrays;
 
 public class TestInputConfig implements InputConfig {
-    private final List<Integer> inputValues;
-
-    public TestInputConfig(List<Integer> inputValues) {
-        this.inputValues = inputValues;
+    public Iterable<Integer> getInput() {
+        return Arrays.asList(1, 2, 3);  // Example mock input data
     }
 
-    
-    // need to create a getIntput() method in InputConfig interface
-    public List<Integer> getInput() {
-        return inputValues;
+    public String getFilePath() {
+        return "mock/input/file/path";  // Mock file path for testing
     }
 }

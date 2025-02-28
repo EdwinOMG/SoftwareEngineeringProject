@@ -1,22 +1,20 @@
-package project.annotations;
-
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import main.java.OutputConfig;
 
 public class TestOutputConfig implements OutputConfig {
-    private final List<Integer> outputValues = new ArrayList<>();
-
-    
-    //create writeOutput method in OutputConfig interface
+    @Override
     public void writeOutput(Integer output) {
-        outputValues.add(output);
+        System.out.println("Writing output: " + output);  // Example mock output writing
     }
 
+    @Override
     public Iterable<Integer> getOutput() {
-        return outputValues;
+        return Arrays.asList(1, 2, 3);  // Example mock output data
+    }
+
+    @Override
+    public String getFilePath() {
+        return "mock/output/file/path";  // Mock file path for testing
     }
 }
-

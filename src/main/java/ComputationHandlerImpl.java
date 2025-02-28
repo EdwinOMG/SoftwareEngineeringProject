@@ -30,10 +30,10 @@ public class ComputationHandlerImpl implements ComputationHandler {
         }
 
         // Step 3: Write results to the specified output
-        OutputResult outputResult = dataStore.appendResult(request.getOutputConfig(), results, '\n');
+        OutputResult outputResult = dataStore.appendResult(request.getOutput(), results, '\n');
 
         // Step 4: Return the result status
-        return new ComputeEngineResultImpl(outputResult.getStatus());
+        return new ComputeEngineResultImpl();
     }
 
     // Helper method to format the number chain as a string

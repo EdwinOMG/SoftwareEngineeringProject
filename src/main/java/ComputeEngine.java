@@ -6,5 +6,7 @@ import main.java.project.annotations.ConceptualAPI;
 public interface ComputeEngine {
 
 	Iterable<Integer> compute(Iterable<Integer> data);
+
+	Iterable<Integer> computeNumberChain(int num);
 	
 }

@@ -1,22 +1,9 @@
 package main.java;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-import java.util.List;
-
-public class ComputationHandlerImpl implements ComputationHandler {
-    
-=======
-=======
->>>>>>> Stashed changes
 import java.util.ArrayList;
 
 public class ComputationHandlerImpl implements ComputationHandler {
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     private final ComputeEngine computeEngine;
     private final DataStore dataStore;
 
@@ -27,33 +14,12 @@ public class ComputationHandlerImpl implements ComputationHandler {
 
     @Override
     public ComputeEngineResult compute(ComputeEngineRequest request) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        // Step 1: Read integers from the data store based on the user's input configuration
-        Iterable<Integer> data = dataStore.read(request.getInput());
-        
-        if (data == null) {
-            return ComputeEngineResult.FAIL;
-        }
-
-        // Step 2: Pass the integers to the compute engine for processing
-        Iterable<Integer> computedResults = computeEngine.compute(data);
-
-        // Step 3: Write the results back to the data store
-        OutputResult result = dataStore.appendResult(request.getOutput(), computedResults);
-        
-        return result.getStatus() == OutputResult.ShowResultStatus.SUCCESS 
-            ? ComputeEngineResult.SUCCESS 
-            : ComputeEngineResult.FAIL;
-=======
-=======
->>>>>>> Stashed changes
         // Step 1: Read input numbers from the specified location
         Iterable<Integer> numbers = dataStore.read(request.getInputConfig());
 
         // Step 1, Part 2: Check for null data and return failure if necessary
         if (numbers == null) {
-            return ComputeEngineResult.FAIL;
+            return new ComputeEngineResultImpl(ShowResultStatus.FAILURE);
         }
 
         // Step 2: Compute the number chain for each number
@@ -67,7 +33,7 @@ public class ComputationHandlerImpl implements ComputationHandler {
         OutputResult outputResult = dataStore.appendResult(request.getOutputConfig(), results, '\n');
 
         // Step 4: Return the result status
-        return new ComputeEngineResult(outputResult.getStatus());
+        return new ComputeEngineResultImpl(outputResult.getStatus());
     }
 
     // Helper method to format the number chain as a string
@@ -81,9 +47,5 @@ public class ComputationHandlerImpl implements ComputationHandler {
             first = false;
         }
         return sb.toString();
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     }
 }

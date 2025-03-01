@@ -70,5 +70,8 @@ public class ComputationHandlerImpl {
                 ? ComputeEngineResult.SUCCESS
                 : ComputeEngineResult.FAIL;
     }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }

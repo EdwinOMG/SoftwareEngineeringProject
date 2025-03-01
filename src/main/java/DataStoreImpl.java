@@ -4,6 +4,10 @@ package main.java;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+import java.io.File;
+>>>>>>> Stashed changes
 =======
 import java.io.File;
 >>>>>>> Stashed changes
@@ -16,6 +20,7 @@ public class DataStoreImpl implements DataStore {
 
     @Override
     public Iterable<Integer> read(InputConfig inputConfig) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         ArrayList<Integer> numbers = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputConfig.getFilePath()))) {
@@ -46,6 +51,8 @@ public class DataStoreImpl implements DataStore {
                 }
             };
 =======
+=======
+>>>>>>> Stashed changes
         List<Integer> inputData = new ArrayList<>();
         
         // Assume the file path is passed as input (e.g., through the InputConfig).
@@ -80,6 +87,9 @@ public class DataStoreImpl implements DataStore {
             }
         } catch (IOException e) {
             e.printStackTrace(); // Handle error as appropriate
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
 

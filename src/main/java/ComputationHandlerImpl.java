@@ -11,6 +11,7 @@ public class ComputationHandlerImpl {
         this.computeEngine = computeEngine;
     }
 
+<<<<<<< Updated upstream
     public ComputeEngineResult compute(InputConfig inputConfig, OutputConfig outputConfig) {
         // Step b: Request data from the data storage component
         Iterable<Integer> numbers = dataStore.read(inputConfig);
@@ -52,4 +53,22 @@ public class ComputationHandlerImpl {
         }
         return 0;  // Default return if something goes wrong
     }
+=======
+    @Override
+    public ComputeEngineResult compute(ComputeEngineRequest request) {
+        // Step 1: Read input from the data storage component (InputConfig provided by user)
+        Iterable<Integer> inputData = dataStore.read(request.getInput());
+
+        // Step 2: Pass the input integers to the compute component for number chain computation
+        DigitChains chains = computeEngine.compute(inputData);
+
+        // Step 3: Write the computed results to the output (OutputConfig provided by user)
+        OutputResult outputResult = dataStore.appendResult(request.getOutput(), chains, request.getDelimiter());
+
+        // Step 4: Return the computation result status based on output success/failure
+        return outputResult.getStatus() == ShowResultStatus.SUCCESS
+                ? ComputeEngineResult.SUCCESS
+                : ComputeEngineResult.FAIL;
+    }
+>>>>>>> Stashed changes
 }

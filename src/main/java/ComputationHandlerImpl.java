@@ -39,9 +39,8 @@ public class ComputationHandlerImpl implements ComputationHandler {
         	return outputResult.getStatus() == ShowResultStatus.SUCCESS
         			? ComputeEngineResult.SUCCESS
         			: ComputeEngineResult.FAIL;
-    		}
-    	catch (Exception e) { // catch unexpected exceptions
-    		return ComputeEngineResult.FAIL;
+    		} catch (Exception e) { // catch unexpected exceptions
+    			return ComputeEngineResult.FAIL;
     	}
     }
 }  

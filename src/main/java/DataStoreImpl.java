@@ -14,7 +14,7 @@ public class DataStoreImpl implements DataStore {
     	try {
     		Iterable<Integer> inputData = inputConfig.getInput();
     		if (inputData == null) {
-    			throw new IllegalStateException("InputConfig returned null")
+    			throw new IllegalStateException("InputConfig returned null");
     		}
     		return inputData;
     	} catch (Exception e) {

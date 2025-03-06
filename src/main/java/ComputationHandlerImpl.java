@@ -24,22 +24,22 @@ public class ComputationHandlerImpl implements ComputationHandler {
     	try {
     		
     	
-        Iterable<Integer> inputData = dataStore.read(request.getInput());
-        if (inputData == null) {
-        	return ComputeEngineResult.FAIL;
-        }
-        DigitChains chains = computeEngine.compute(inputData);
-        if (chains == null) {
-        	return ComputeEngineResult.FAIL;
-        }
-        OutputResult outputResult = dataStore.appendResult(request.getOutput(), chains, request.getDelimiter());
-        if (outputResult.getStatus() != ShowResultStatus.SUCCESS) {
-        	return ComputeEngineResult.FAIL;
-        }
-        return outputResult.getStatus() == ShowResultStatus.SUCCESS
-                ? ComputeEngineResult.SUCCESS
-                : ComputeEngineResult.FAIL;
-    	}
+    		Iterable<Integer> inputData = dataStore.read(request.getInput());
+    		if (inputData == null) {
+    			return ComputeEngineResult.FAIL;
+    		}
+    		DigitChains chains = computeEngine.compute(inputData);
+    		if (chains == null) {
+    			return ComputeEngineResult.FAIL;
+    		}
+    		OutputResult outputResult = dataStore.appendResult(request.getOutput(), chains, request.getDelimiter());
+        	if (outputResult.getStatus() != ShowResultStatus.SUCCESS) {
+        		return ComputeEngineResult.FAIL;
+        	}
+        	return outputResult.getStatus() == ShowResultStatus.SUCCESS
+        			? ComputeEngineResult.SUCCESS
+        			: ComputeEngineResult.FAIL;
+    		}
     	catch (Exception e) { // catch unexpected exceptions
     		return ComputeEngineResult.FAIL;
     	}

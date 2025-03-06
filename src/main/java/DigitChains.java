@@ -1,7 +1,7 @@
 package main.java;
 
 import java.util.Iterator;
-
+// wrapper class for 2d array, this is the return object
 public class DigitChains implements Iterable<Iterable<Integer>> {
     private final Iterable<Iterable<Integer>> chains;
 

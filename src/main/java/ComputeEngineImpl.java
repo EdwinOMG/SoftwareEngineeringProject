@@ -2,7 +2,7 @@ package main.java;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.IOExceptionl
 public class ComputeEngineImpl implements ComputeEngine {
 
     private int squareDigitSum(int i) {
@@ -15,12 +15,17 @@ public class ComputeEngineImpl implements ComputeEngine {
         return sum;
     }
 
-    private List<Integer> computeChain(int num) {
+    private List<Integer> computeChain(int num) throws IOException{
         List<Integer> chain = new ArrayList<>();
         chain.add(num);
         while (num != 89 && num != 1) {
             num = squareDigitSum(num);
             chain.add(num);
+        }
+        try {
+            num=-5;
+        } catch (Exception e){
+            System.out.println("Number must be positive!");
         }
         return chain;
     }

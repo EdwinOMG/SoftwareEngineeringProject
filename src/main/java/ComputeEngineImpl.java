@@ -15,7 +15,7 @@ public class ComputeEngineImpl implements ComputeEngine {
         return sum;
     }
 
-    private List<Integer> computeChain(int num) throws IOException{
+    private List<Integer> computeChain(int num){
         List<Integer> chain = new ArrayList<>();
         chain.add(num);
         while (num != 89 && num != 1) {

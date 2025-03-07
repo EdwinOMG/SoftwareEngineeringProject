@@ -2,6 +2,7 @@ package test.project.annotations;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 
@@ -15,8 +16,8 @@ public class ComputationHandlerImplTest {
 
 	 @Test
 	    public void constructorShouldThrowExceptionWhenDependenciesAreNull() {
-	        ComputeEngine mockEngine = Mockito.mock(ComputeEngine.class);
-	        DataStore mockDataStore = Mockito.mock(DataStore.class);
+	        ComputeEngine mockEngine = mock(ComputeEngine.class);
+	        DataStore mockDataStore = mock(DataStore.class);
 	        
 	        assertThrows(IllegalArgumentException.class, () -> new ComputationHandlerImpl(null, mockDataStore));
 	        assertThrows(IllegalArgumentException.class, () -> new ComputationHandlerImpl(mockEngine, null));
@@ -25,8 +26,8 @@ public class ComputationHandlerImplTest {
 
 	    @Test
 	    public void computeShouldFailForInvalidRequest() {
-	        ComputeEngine mockEngine = Mockito.mock(ComputeEngine.class);
-	        DataStore mockDataStore = Mockito.mock(DataStore.class);
+	        ComputeEngine mockEngine = mock(ComputeEngine.class);
+	        DataStore mockDataStore = mock(DataStore.class);
 	        ComputationHandlerImpl handler = new ComputationHandlerImpl(mockEngine, mockDataStore);
 	        
 	        ComputeEngineRequest invalidRequest = new ComputeEngineRequest(null, null, ',');

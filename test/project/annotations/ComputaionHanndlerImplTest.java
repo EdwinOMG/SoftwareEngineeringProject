@@ -1,7 +1,7 @@
 package test.project.annotations;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.mockito.Mockito;
 
 class ComputationHandlerImplTest {

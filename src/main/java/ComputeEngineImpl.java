@@ -2,7 +2,7 @@ package main.java;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOExceptionl
+import java.lang.IllegalArgumentException;
 public class ComputeEngineImpl implements ComputeEngine {
 
     private int squareDigitSum(int i) {
@@ -22,10 +22,8 @@ public class ComputeEngineImpl implements ComputeEngine {
             num = squareDigitSum(num);
             chain.add(num);
         }
-        try {
-            num=-5;
-        } catch (Exception e){
-            System.out.println("Number must be positive!");
+        if (num <= 0) {
+            throw new IllegalArgumentException("Number must be positive");
         }
         return chain;
     }

@@ -45,4 +45,67 @@ public class TestcomputationHandler {
 		assertNotNull("Compute Result should be something", result);
 		assert(result.getStatus() == ComputeEngineResultStatus.SUCCESS);
 	}
+	
+	 @Test
+	    void testComputeWithNullRequest() {
+	        // Arrange
+	        ComputeEngine mockComputeEngine = mock(ComputeEngine.class);
+	        DataStore mockDataStore = mock(DataStore.class);
+	        ComputationHandlerImpl handler = new ComputationHandlerImpl(mockComputeEngine, mockDataStore);
+
+	        // Act
+	        ComputeEngineResult result = handler.compute(null);
+
+	        // Assert
+	        assertEquals(ComputeEngineResult.FAIL, result, "Expected FAIL when request is null");
+	    }
+
+	    @Test
+	    void testComputeWithNullInput() {
+	        // Arrange
+	        ComputeEngine mockComputeEngine = mock(ComputeEngine.class);
+	        DataStore mockDataStore = mock(DataStore.class);
+	        ComputationHandlerImpl handler = new ComputationHandlerImpl(mockComputeEngine, mockDataStore);
+
+	        ComputeEngineRequest request = new ComputeEngineRequest(null, "output", ",");
+
+	        // Act
+	        ComputeEngineResult result = handler.compute(request);
+
+	        // Assert
+	        assertEquals(ComputeEngineResult.FAIL, result, "Expected FAIL when input is null");
+	    }
+
+	    @Test
+	    void testComputeWithNullOutput() {
+	        // Arrange
+	        ComputeEngine mockComputeEngine = mock(ComputeEngine.class);
+	        DataStore mockDataStore = mock(DataStore.class);
+	        ComputationHandlerImpl handler = new ComputationHandlerImpl(mockComputeEngine, mockDataStore);
+
+	        ComputeEngineRequest request = new ComputeEngineRequest("input", null, ",");
+
+	        // Act
+	        ComputeEngineResult result = handler.compute(request);
+
+	        // Assert
+	        assertEquals(ComputeEngineResult.FAIL, result, "Expected FAIL when output is null");
+	    }
+
+	    @Test
+	    void testComputeWithNullInputAndOutput() {
+	        // Arrange
+	        ComputeEngine mockComputeEngine = mock(ComputeEngine.class);
+	        DataStore mockDataStore = mock(DataStore.class);
+	        ComputationHandlerImpl handler = new ComputationHandlerImpl(mockComputeEngine, mockDataStore);
+
+	        ComputeEngineRequest request = new ComputeEngineRequest(null, null, ",");
+
+	        // Act
+	        ComputeEngineResult result = handler.compute(request);
+
+	        // Assert
+	        assertEquals(ComputeEngineResult.FAIL, result, "Expected FAIL when both input and output are null");
+	    }
+	}
 }

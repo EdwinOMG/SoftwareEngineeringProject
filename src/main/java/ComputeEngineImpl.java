@@ -37,4 +37,11 @@ public class ComputeEngineImpl implements ComputeEngine {
         }
         return new DigitChains(result);
     }
+    public void integrationTest () {
+        try {
+            number=-5;
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
 }

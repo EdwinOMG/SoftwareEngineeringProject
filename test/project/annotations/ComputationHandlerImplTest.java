@@ -1,9 +1,16 @@
 package test.project.annotations;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
+
+import src.main.java.ComputeEngineResult;
+import src.main.java.ComputeEngineRequest;
+import src.main.java.ComputationHandlerImpl;
+import src.main.java.DataStore;
+import src.main.java.ComputeEngine;
 
 
 class ComputationHandlerImplTest {

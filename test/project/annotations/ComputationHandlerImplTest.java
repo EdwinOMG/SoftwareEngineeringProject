@@ -1,5 +1,4 @@
 package test.project.annotations;
-package src.main.java.project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;

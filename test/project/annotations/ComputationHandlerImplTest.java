@@ -1,4 +1,4 @@
-package project.annotations;
+package test.project.annotations;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -7,11 +7,11 @@ import static org.mockito.Mockito.mock;
 import org.junit.Test;
 import org.junit.Before;
 
-import main.java.ComputationHandlerImpl;
-import main.java.ComputeEngine;
-import main.java.ComputeEngineRequest;
-import main.java.ComputeEngineResult;
-import main.java.DataStore;
+import src.main.java.ComputationHandlerImpl;
+import src.main.java.ComputeEngine;
+import src.main.java.ComputeEngineRequest;
+import src.main.java.ComputeEngineResult;
+import src.main.java.DataStore;
 
 public class ComputationHandlerImplTest {
 

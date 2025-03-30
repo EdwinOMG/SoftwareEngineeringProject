@@ -16,16 +16,21 @@ public class ComputeEngineImpl implements ComputeEngine {
     }
 
     private List<Integer> computeChain(int num){
+        if (num < 1) {
+    		throw new IllegalArgumentException("Number can't be less than 1!");
+    	
+    	}
+    	try {
         List<Integer> chain = new ArrayList<>();
         chain.add(num);
         while (num != 89 && num != 1) {
             num = squareDigitSum(num);
             chain.add(num);
         }
-        if (num <= 0) {
-            throw new IllegalArgumentException("Number must be positive");
-        }
         return chain;
+    	} catch (Exception e) {
+    		throw new IllegalStateException("Yeah idk how you got here tbh " + e);
+    	}
     }
 
     @Override

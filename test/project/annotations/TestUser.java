@@ -7,9 +7,9 @@ public class TestUser {
 	
 	// TODO 3: change the type of this variable to the name you're using for your
 	// @NetworkAPI interface; also update the parameter passed to the constructor
-	private final ComputationCoordinator coordinator;
+	private final ComputationHandler coordinator;
 
-	public TestUser(ComputationCoordinator coordinator) {
+	public TestUser(ComputationHandler coordinator) {
 		this.coordinator = coordinator;
 	}
 

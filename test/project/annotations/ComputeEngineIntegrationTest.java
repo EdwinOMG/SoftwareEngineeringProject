@@ -1,5 +1,14 @@
 package project.annotations;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.jupiter.api.Test;
+
 import main.java.ComputeEngine;
 import main.java.ComputeEngineImpl;
 import main.java.DataStoreImpl;
@@ -7,14 +16,6 @@ import main.java.DigitChains;
 import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertFalse;
 
 public class ComputeEngineIntegrationTest {
     private ComputeEngine computeEngine;

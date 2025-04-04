@@ -31,7 +31,9 @@ public class MultiThreadedComputationHandlerImpl implements ComputationHandler {
 
         try {
             Iterable<Integer> inputData = dataStore.read(request.getInput());
-            if (inputData == null) return ComputeEngineResult.FAIL;
+            if (inputData == null) {
+                return ComputeEngineResult.FAIL;
+            }
 
             List<Future<Iterable<Integer>>> futures = new ArrayList<>();
 

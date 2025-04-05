@@ -28,6 +28,7 @@ import main.java.DigitChains;
 import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
+import main.java.ComputeEngineRequest;
 import main.java.MultiThreadedComputationHandlerImpl;
 
 

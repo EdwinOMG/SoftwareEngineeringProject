@@ -121,7 +121,7 @@ public class TestMultiUser {
 		Assert.assertEquals(singleThreaded, multiThreaded);
 	}
 	@Test
-	public void testMTI() throws Exception{
+	public void testMTI() throws IllegalArgumentException{
 		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(null, null);
 		ComputeEngineRequest request=null;
 		mti.compute(request);

@@ -123,7 +123,7 @@ public class TestMultiUser {
 	@Test
 	public void testMTI() throws Exception{
 		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(null, null);
-		ComputeEngineRequest request=new ComputeEngineRequest();
+		ComputeEngineRequest request=null;
 		mti.compute(request);
 		Assert.assertEquals(true, request);
 		

@@ -75,9 +75,9 @@ public class TestMultiUser {
 
 	@Test
 	public void compareMultiAndSingleThreaded() throws Exception {
-		int nThreads = 4;
+		int threadCount = 4;
 		List<TestUser> testUsers = new ArrayList<TestUser>();
-		for (int i = 0; i < nThreads; i++) {
+		for (int i = 0; i < threadCount; i++) {
 			testUsers.add(new TestUser(coordinator));
 		}
 		
@@ -88,7 +88,7 @@ public class TestMultiUser {
 	    
 		// Run single threaded
 	    String singleThreadFilePrefix = outputDir.resolve("singleThreadOut.tmp").toString();
-	    for (int i = 0; i < nThreads; i++) {
+	    for (int i = 0; i < threadCount; i++) {
 	        Path outputPath = Paths.get(singleThreadFilePrefix + i);
 	        testUsers.get(i).run(outputPath.toString());
 	    }
@@ -98,7 +98,7 @@ public class TestMultiUser {
 		List<Future<?>> results = new ArrayList<>();
 		String multiThreadFilePrefix = outputDir.resolve("multiThreadOut.tmp").toString();
 
-		for (int i = 0; i < nThreads; i++) {
+		for (int i = 0; i < threadCount; i++) {
 	        Path outputPath = Paths.get(multiThreadFilePrefix + i);
 	        TestUser testUser = testUsers.get(i);
 	        results.add(threadPool.submit(() -> testUser.run(outputPath.toString())));
@@ -114,8 +114,8 @@ public class TestMultiUser {
 		
 		
 		// Check that the output is the same for multi-threaded and single-threaded
-		List<String> singleThreaded = loadAllOutput(singleThreadFilePrefix, nThreads);
-		List<String> multiThreaded = loadAllOutput(multiThreadFilePrefix, nThreads);
+		List<String> singleThreaded = loadAllOutput(singleThreadFilePrefix, threadCount);
+		List<String> multiThreaded = loadAllOutput(multiThreadFilePrefix, threadCount);
 		Assert.assertEquals(singleThreaded, multiThreaded);
 	}
 

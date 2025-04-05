@@ -31,6 +31,7 @@ import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
 import main.java.ComputeEngineRequest;
+import main.java.ComputeEngineResult;
 import main.java.MultiThreadedComputationHandlerImpl;
 
 
@@ -123,11 +124,13 @@ public class TestMultiUser {
 		Assert.assertEquals(singleThreaded, multiThreaded);
 	}
 	@Test
-	public void testMTI() throws IllegalArgumentException{
-		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(null, null);
-		ComputeEngineRequest request=null;
-		mti.compute(request);
-		Assert.assertEquals(false, request);
+	public void testMTI(){
+		ComputeEngine computeEngine = mock(ComputeEngine.class);
+        	DataStore dataStore = mock(DataStore.class);
+		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(computeEngine, dataStore);
+		ComputeEngineRequest request = mock(ComputeEngineRequest.class);
+		ComputeEngineResult result = mti.compute(request);
+		Assert.assertEquals(ComputeEngineResult.SUCCESS, result);
 		
 	}
 	private List<String> loadAllOutput(String prefix, int threadCount) throws IOException {

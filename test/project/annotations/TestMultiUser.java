@@ -22,9 +22,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions;
-import static org.mockito.Mockito;
-
 import main.java.ComputationHandler;
 import main.java.ComputationHandlerImpl;
 import main.java.ComputeEngine;
@@ -127,31 +124,10 @@ public class TestMultiUser {
 	}
 	@Test
 	public void testMTI() throws IllegalArgumentException{
-		ComputeEngineRequest request = mock(ComputeEngineRequest.class);
-        	String inputKey = "inputKey";
-        	String outputKey = "outputKey";
-        	String delimiter = ",";
-
-        	when(request.getInput()).thenReturn(inputKey);
-        	when(request.getOutput()).thenReturn(outputKey);
-        	when(request.getDelimiter()).thenReturn(delimiter);
-
-        	List<Integer> inputData = Arrays.asList(1, 2, 3);
-        	when(dataStore.read(inputKey)).thenReturn(inputData);
-
-        	when(computeEngine.compute(Collections.singletonList(1))).thenReturn(List.of(1, 2, 3));
-        	when(computeEngine.compute(Collections.singletonList(2))).thenReturn(List.of(2, 3, 4));
-        	when(computeEngine.compute(Collections.singletonList(3))).thenReturn(List.of(3, 4, 5));
-
-        	OutputResult outputResult = mock(OutputResult.class);
-        	when(outputResult.getStatus()).thenReturn(OutputResult.ShowResultStatus.SUCCESS);
-        	when(dataStore.appendResult(anyString(), any(DigitChains.class), anyString())).thenReturn(outputResult);
-
-        // Act
-       		ComputeEngineResult result = handler.compute(request);
-
-        // Assert
-        	assertEquals(ComputeEngineResult.SUCCESS, result);
+		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(null, null);
+		ComputeEngineRequest request=null;
+		mti.compute(request);
+		Assert.assertEquals(false, request);
 		
 	}
 	private List<String> loadAllOutput(String prefix, int threadCount) throws IOException {

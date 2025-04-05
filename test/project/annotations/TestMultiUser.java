@@ -28,6 +28,7 @@ import main.java.DigitChains;
 import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
+import main.java.MultiThreadedComputationHandlerImpl;
 
 
 public class TestMultiUser {
@@ -118,7 +119,13 @@ public class TestMultiUser {
 		List<String> multiThreaded = loadAllOutput(multiThreadFilePrefix, threadCount);
 		Assert.assertEquals(singleThreaded, multiThreaded);
 	}
-
+	public void testMTI(){
+		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl();
+		ComputeEngineRequest request=new ComputeEngineRequest();
+		mti.compute(request);
+		Assert.assertEquals(true, request);
+		
+	}
 	private List<String> loadAllOutput(String prefix, int threadCount) throws IOException {
 	    List<String> result = new ArrayList<>();
 	    for (int i = 0; i < threadCount; i++) {
@@ -129,5 +136,6 @@ public class TestMultiUser {
 	    }
 	    return result;
 	}
+	
 
 }

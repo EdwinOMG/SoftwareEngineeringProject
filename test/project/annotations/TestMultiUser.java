@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,8 +20,8 @@ import java.util.concurrent.Future;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
 import main.java.ComputationHandler;
 import main.java.ComputationHandlerImpl;
 import main.java.ComputeEngine;
@@ -28,6 +30,9 @@ import main.java.DigitChains;
 import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
+import main.java.ComputeEngineRequest;
+import main.java.ComputeEngineResult;
+import main.java.MultiThreadedComputationHandlerImpl;
 
 
 public class TestMultiUser {
@@ -118,7 +123,16 @@ public class TestMultiUser {
 		List<String> multiThreaded = loadAllOutput(multiThreadFilePrefix, threadCount);
 		Assert.assertEquals(singleThreaded, multiThreaded);
 	}
-
+	@Test
+	public void testMTI(){
+		ComputeEngine computeEngine = mock(ComputeEngine.class);
+        	DataStore dataStore = mock(DataStore.class);
+		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(computeEngine, dataStore);
+		ComputeEngineRequest request = mock(ComputeEngineRequest.class);
+		ComputeEngineResult result = mti.compute(request);
+		Assert.assertEquals(true, result);
+		
+	}
 	private List<String> loadAllOutput(String prefix, int threadCount) throws IOException {
 	    List<String> result = new ArrayList<>();
 	    for (int i = 0; i < threadCount; i++) {
@@ -129,5 +143,6 @@ public class TestMultiUser {
 	    }
 	    return result;
 	}
+	
 
 }

@@ -130,7 +130,7 @@ public class TestMultiUser {
 		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl(computeEngine, dataStore);
 		ComputeEngineRequest request = mock(ComputeEngineRequest.class);
 		ComputeEngineResult result = mti.compute(request);
-		Assert.assertEquals(ComputeEngineResult.SUCCESS, result);
+		Assert.assertEquals(true, result);
 		
 	}
 	private List<String> loadAllOutput(String prefix, int threadCount) throws IOException {

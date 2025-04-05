@@ -119,7 +119,8 @@ public class TestMultiUser {
 		List<String> multiThreaded = loadAllOutput(multiThreadFilePrefix, threadCount);
 		Assert.assertEquals(singleThreaded, multiThreaded);
 	}
-	public void testMTI(){
+	@Test
+	public void testMTI() throws Exception{
 		MultiThreadedComputationHandlerImpl mti=new MultiThreadedComputationHandlerImpl();
 		ComputeEngineRequest request=new ComputeEngineRequest();
 		mti.compute(request);

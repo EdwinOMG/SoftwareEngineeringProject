@@ -1,18 +1,19 @@
 package project.annotations;
 
-import main.java.ComputeEngineImpl;
-import main.java.DigitChains;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import main.java.ComputeEngineImpl;
+import main.java.DigitChains;
 
 public class TestComputeEngine {
     private ComputeEngineImpl computeEngine;
 
-    @Before
+    @BeforeEach 
     public void setUp() {
         computeEngine = new ComputeEngineImpl();
     }
@@ -31,6 +32,6 @@ public class TestComputeEngine {
         DigitChains result = computeEngine.compute(input);
 
         // Verify the result
-        assertNotNull("Compute method should return a non-null result", result);
+        assertNotNull(result, "Compute method should return a non-null result");
     }
 }

@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package computation; 
+
+option java_multiple_files = true;
+option java_package = "main.java";
+option java_outer_classname = "ComputationProto";
+
+service ComputationService {
+    rpc Compute (ComputeRequest) returns (ComputeResponse);
+}
+
+message ComputeRequest {
+    oneof input_source {
+        string input_file = 1;
+        Numbers numbers = 2;
+    }
+    string output_file = 3;  // Changed from 2 to 3
+    string delimiter = 4;    // Changed from 3 to 4
+}
+
+message Numbers {
+    repeated int32 numbers = 1;
+}
+
+message ComputeResponse {
+    enum Status {
+        SUCCESS = 0;
+        FAILURE = 1;
+    }
+    Status status = 1;
+    string message = 2;
+    repeated NumberChain chains = 3;
+}
+
+message NumberChain {
+    repeated int32 numbers = 1;
+}

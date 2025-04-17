@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "main.java.grpc";
+option java_package = "main.grpc";
 option java_outer_classname = "DataStoreProto";
 
 import "computation.proto";
@@ -22,7 +22,7 @@ message ReadResponse {
 
 message AppendRequest {
     string file_path = 1;
-    repeated computation.NumberChain chains = 2;
+    repeated NumberChain chains = 2;
     string delimiter = 3;
 }
 

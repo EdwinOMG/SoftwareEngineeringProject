@@ -1,25 +1,28 @@
 plugins {
+    id 'java'
+    id 'eclipse'
     id 'com.google.protobuf' version '0.9.4'
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
 eclipse.project.name = 'SEProject'
+
+// Set Java version compatibility
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // or your preferred version
+    }
+}
+
+
 
 sourceSets {
     main {
-        proto {
-            srcDirs = ['protobuf']
-        }
         java {
-            srcDirs = ['src',
-                       'build/generated/source/proto/main/grpc',
-                       'build/generated/source/proto/main/java']
-        }
-    }
-    test {
-        java {
-            srcDirs = ['test']
+            srcDirs = [
+                'src/main/java',
+                "${buildDir}/generated/source/proto/main/grpc",
+                "${buildDir}/generated/source/proto/main/java"
+            ]
         }
     }
 }
@@ -30,11 +33,9 @@ repositories {
 
 test {
     useJUnitPlatform()
-
     filter {
         excludeTestsMatching "project.annotations.Assignment*"
         setFailOnNoMatchingTests(false)
-        
     }
 }
 
@@ -43,27 +44,50 @@ def protobufVersion = '3.25.1'
 def protocVersion = protobufVersion
 
 dependencies {
+    // gRPC dependencies
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
     implementation "io.grpc:grpc-services:${grpcVersion}"
     implementation "io.grpc:grpc-stub:${grpcVersion}"
     compileOnly "org.apache.tomcat:annotations-api:6.0.53"
-
     runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
 
+    // Test dependencies
     testImplementation "io.grpc:grpc-testing:${grpcVersion}"
     testImplementation "io.grpc:grpc-inprocess:${grpcVersion}"
-
-    testImplementation('junit:junit:4.12')
-    testImplementation('org.junit.jupiter:junit-jupiter:5.10.2')
-    testImplementation('org.mockito:mockito-core:5.11.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.mockito:mockito-core:5.11.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.11.0'
 }
 
 protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protocVersion}"
+    }
     plugins {
-        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
     }
     generateProtoTasks {
-        all()*.plugins { grpc {} }
+        all().each { task ->
+            task.builtins {
+                java {
+                    outputSubDir = 'java'  
+                }
+            }
+            task.plugins {
+                grpc {
+                    outputSubDir = 'grpc' 
+                }
+            }
+        }
     }
+    generatedFilesBaseDir = "$projectDir/build/generated/source/proto"
 }
+
+// Ensure proto generation happens before compilation
+tasks.named('compileJava').configure {
+    dependsOn 'generateProto'
+}
+
+

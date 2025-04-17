@@ -1,10 +1,7 @@
 syntax = "proto3";
 
-package computation; 
-
 option java_multiple_files = true;
-option java_package = "main.java";
-option java_outer_classname = "ComputationProto";
+option java_package = "main.grpc";
 
 service ComputationService {
     rpc Compute (ComputeRequest) returns (ComputeResponse);
@@ -15,8 +12,8 @@ message ComputeRequest {
         string input_file = 1;
         Numbers numbers = 2;
     }
-    string output_file = 3;  // Changed from 2 to 3
-    string delimiter = 4;    // Changed from 3 to 4
+    string output_file = 3;
+    string delimiter = 4;
 }
 
 message Numbers {
@@ -26,7 +23,9 @@ message Numbers {
 message ComputeResponse {
     enum Status {
         SUCCESS = 0;
-        FAILURE = 1;
+        INVALID_INPUT = 1;
+        COMPUTATION_ERROR = 2;
+        IO_ERROR = 3;
     }
     Status status = 1;
     string message = 2;

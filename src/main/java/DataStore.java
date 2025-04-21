@@ -1,6 +1,9 @@
 package main.java;
 
+import main.java.project.annotations.ProcessAPI;
+
 //writes ther esults to outputconfig, which defines how the output is handled
+@ProcessAPI
 public interface DataStore {
     Iterable<Integer> read(InputConfig inputConfig);
     OutputResult appendResult(OutputConfig output, DigitChains chains, char delimiter);

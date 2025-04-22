@@ -5,7 +5,6 @@ import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import main.grpc.AppendRequest;
 import main.grpc.AppendResponse;
-import main.grpc.DataStoreProto.*;
 import main.grpc.DataStoreServiceGrpc;
 import main.grpc.ReadRequest;
 import main.grpc.ReadResponse;

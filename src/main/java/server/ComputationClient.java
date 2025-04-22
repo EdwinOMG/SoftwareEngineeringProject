@@ -26,11 +26,11 @@ public class ComputationClient { // Boilerplate TODO: change to <servicename>Cli
 
     // Boilerplate TODO: replace this method with actual client call/response logic
     
-    public ComputeResponse computeNumbers(List<Integer> numbers, String outputFile, String Delimiter) {
+    public ComputeResponse computeNumbers(List<Integer> numbers, String outputFile, String delimiter) {
     	ComputeRequest request = ComputeRequest.newBuilder()
     			.setNumbers(Numbers.newBuilder().addAllNumbers(numbers).build())
     			.setOutputFile(outputFile)
-    			.setDelimiter(Delimiter)
+    			.setDelimiter(delimiter)
     			.build();
     	return blockingStub.compute(request);
     }
@@ -44,7 +44,7 @@ public class ComputationClient { // Boilerplate TODO: change to <servicename>Cli
             ComputationClient client = new ComputationClient(channel); // Boilerplate TODO: update to this class name
             ComputeResponse response = client.computeNumbers(
             		List.of(44,32,15),
-            		"/path/to/output.txt",
+            		"src/main/java/server/output.text",
             		","
             		);
             

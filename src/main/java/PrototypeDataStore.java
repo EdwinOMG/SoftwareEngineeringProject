@@ -12,7 +12,7 @@ public class PrototypeDataStore {
         List<Integer> inputNumbers = List.of(44, 32, 15);
         InputConfig inputConfig = () -> inputNumbers;
         List<Integer> outputData = new ArrayList<>();
-        OutputConfig outputConfig = result -> outputData.add(result);
+        OutputConfig outputConfig = result -> outputData.add(	result);
         char delimiter = ';';
 
         Iterable<Integer> readData = dataStore.read(inputConfig);

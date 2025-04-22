@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertFalse;
 
-public class ComputeEngineIntegrationTest {
+public class TestComputeEngineIntegration {
     private ComputeEngine computeEngine;
     private DataStoreImpl dataStore;
 

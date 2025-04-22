@@ -15,7 +15,7 @@ import main.java.DataStore;
 
 
 
-public class ComputationHandlerImplTest {
+public class TestComputationHandlerImpl {
 
      @Test
         public void constructorShouldThrowExceptionWhenDependenciesAreNull() {

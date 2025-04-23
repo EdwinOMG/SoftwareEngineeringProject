@@ -3,6 +3,7 @@ package main.java.server;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.io.File;
 
 import com.google.rpc.context.AttributeContext.Request;
 
@@ -13,6 +14,8 @@ import io.grpc.ManagedChannel;
 import io.grpc.StatusRuntimeException;
 import main.grpc.AppendRequest;
 import main.grpc.AppendResponse;
+import main.grpc.ComputeRequest;
+
 import main.grpc.DataStoreServiceGrpc;
 import main.grpc.DataStoreServiceGrpc.DataStoreServiceBlockingStub;
 import main.grpc.NumberChain;
@@ -79,6 +82,19 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
         ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create())
                 .build();
         try {
+        	File file = new File("src/main/java/server/input.text"); // LITTLE TEST TO FIND THE BUILD PATH IM DEAD
+        	
+            DataStoreClient client = new DataStoreClient(channel); // Boilerplate TODO: update to this class name
+            if(file.isFile()) {
+            	System.out.println("ITS A FILE");
+            }
+            else {
+            	System.out.println("ITS NOT A FILE");
+            }
+            List<Integer> numbers = client.readFile("src/main/java/server/input.text");
+            
+            System.out.println("Read numbers: " + numbers);
+            boolean success = client.appendChains("src/main/java/server/output.text", List.of(
             DataStoreClient client = new DataStoreClient(channel); // Boilerplate TODO: update to this class name
             
             List<Integer> numbers = client.readFile("/path/to/input.text");
@@ -93,6 +109,7 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
             
             System.out.println("Appended Successfully!");
         } finally {
+        	
             channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
         }
     }

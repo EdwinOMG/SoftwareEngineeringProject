@@ -4,6 +4,7 @@ package main.java.server;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.io.File;
+
 import com.google.rpc.context.AttributeContext.Request;
 
 import io.grpc.Channel;
@@ -14,6 +15,7 @@ import io.grpc.StatusRuntimeException;
 import main.grpc.AppendRequest;
 import main.grpc.AppendResponse;
 import main.grpc.ComputeRequest;
+
 import main.grpc.DataStoreServiceGrpc;
 import main.grpc.DataStoreServiceGrpc.DataStoreServiceBlockingStub;
 import main.grpc.NumberChain;
@@ -93,6 +95,12 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
             
             System.out.println("Read numbers: " + numbers);
             boolean success = client.appendChains("src/main/java/server/output.text", List.of(
+            DataStoreClient client = new DataStoreClient(channel); // Boilerplate TODO: update to this class name
+            
+            List<Integer> numbers = client.readFile("/path/to/input.text");
+            
+            System.out.println("Read numbers: " + numbers);
+            boolean success = client.appendChains("/path/to/output.txt", List.of(
             		NumberChain.newBuilder().addAllNumbers(List.of(1, 2, 3)).build(), 
             		NumberChain.newBuilder().addAllNumbers(List.of(4, 5, 6)).build()
             		),

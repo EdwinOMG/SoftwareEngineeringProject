@@ -19,6 +19,7 @@ import main.java.DataStore;
 import main.java.DataStoreImpl;
 
 
+
 public class ComputationClient { // Boilerplate TODO: change to <servicename>Client
     private final ComputationServiceBlockingStub blockingStub; // Boilerplate TODO: update to appropriate blocking stub
 
@@ -29,6 +30,8 @@ public class ComputationClient { // Boilerplate TODO: change to <servicename>Cli
     // Boilerplate TODO: replace this method with actual client call/response logic
     
     public ComputeResponse computeNumbers(Iterable<Integer> numbers, String outputFile, String delimiter) {
+
+    public ComputeResponse computeNumbers(List<Integer> numbers, String outputFile, String delimiter) {
     	ComputeRequest request = ComputeRequest.newBuilder()
     			.setNumbers(Numbers.newBuilder().addAllNumbers(numbers).build())
     			.setOutputFile(outputFile)
@@ -48,6 +51,11 @@ public class ComputationClient { // Boilerplate TODO: change to <servicename>Cli
     public static void main(String[] args) throws Exception {
         String target = "localhost:50052";  // Boilerplate TODO: make sure the server/port match the server/port you want to connect to
         DataStore dataStore = new DataStoreImpl();
+
+    public static void main(String[] args) throws Exception {
+        String target = "localhost:50052";  // Boilerplate TODO: make sure the server/port match the server/port you want to connect to
+
+ 
         ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create())
                 .build();
         try {
@@ -55,6 +63,8 @@ public class ComputationClient { // Boilerplate TODO: change to <servicename>Cli
             Iterable<Integer> numbers = dataStore.read("src/main/java/server/input.text");
             ComputeResponse response = client.computeNumbers(
             		numbers,
+            ComputeResponse response = client.computeNumbers(
+            		List.of(44,32,15),
             		"src/main/java/server/output.text",
             		","
             		);

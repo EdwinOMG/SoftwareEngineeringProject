@@ -1,10 +1,8 @@
 package main.java.server;
 
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import com.google.rpc.context.AttributeContext.Request;
+import java.io.File;
 
 import io.grpc.Channel;
 import io.grpc.Grpc;
@@ -19,15 +17,13 @@ import main.grpc.NumberChain;
 import main.grpc.ReadRequest;
 import main.grpc.ReadResponse;
 
-
-public class DataStoreClient { // Boilerplate TODO: change to <servicename>Client
-    private final DataStoreServiceBlockingStub blockingStub; // Boilerplate TODO: update to appropriate blocking stub
+public class DataStoreClient {
+    private final DataStoreServiceBlockingStub blockingStub;
 
     public DataStoreClient(Channel channel) {
-        blockingStub = DataStoreServiceGrpc.newBlockingStub(channel);  // Boilerplate TODO: update to appropriate blocking stub
+        blockingStub = DataStoreServiceGrpc.newBlockingStub(channel);
     }
 
-    // Boilerplate TODO: replace this method with actual client call/response logic
     public List<Integer> readFile(String filePath){
     	try {
     		ReadRequest request = ReadRequest.newBuilder()
@@ -37,7 +33,7 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
     		
     		if(!response.getError().isEmpty()) {
     			System.err.println("Read failed: " + response.getError());
-    			return List.of(); // return our empty list since there was an error
+    			return List.of();
     		}
     		return response.getNumbersList();
     	} catch (StatusRuntimeException e) {
@@ -45,6 +41,7 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
     		return List.of();
     	}
     }
+
     public boolean appendChains(String filePath, List<NumberChain> chains, String delimiter) {
     	try {
     		AppendRequest.Builder requestBuilder = AppendRequest.newBuilder()
@@ -63,7 +60,6 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
     		
     		if (response.getStatus() == AppendResponse.Status.FAILURE) {
     			System.err.println("Append failed: " + response.getError());
-    			
     			return false;
     		}
     		return true;
@@ -74,22 +70,29 @@ public class DataStoreClient { // Boilerplate TODO: change to <servicename>Clien
     }
 
     public static void main(String[] args) throws Exception {
-        String target = "localhost:50050";  // Boilerplate TODO: make sure the server/port match the server/port you want to connect to
+        String target = "localhost:50050";
 
         ManagedChannel channel = Grpc.newChannelBuilder(target, InsecureChannelCredentials.create())
                 .build();
         try {
-            DataStoreClient client = new DataStoreClient(channel); // Boilerplate TODO: update to this class name
-            
-            List<Integer> numbers = client.readFile("/path/to/input.text");
+        	File file = new File("src/main/java/server/input.text");
+        	
+            DataStoreClient client = new DataStoreClient(channel);
+            if(file.isFile()) {
+            	System.out.println("ITS A FILE");
+            } else {
+            	System.out.println("ITS NOT A FILE");
+            }
+            List<Integer> numbers = client.readFile("src/main/java/server/input.text");
             
             System.out.println("Read numbers: " + numbers);
-            boolean success = client.appendChains("/path/to/output.txt", List.of(
+            boolean success = client.appendChains("src/main/java/server/output.text", List.of(
             		NumberChain.newBuilder().addAllNumbers(List.of(1, 2, 3)).build(), 
             		NumberChain.newBuilder().addAllNumbers(List.of(4, 5, 6)).build()
             		),
             		","
             		);
+            System.out.println(success);
             
             System.out.println("Appended Successfully!");
         } finally {

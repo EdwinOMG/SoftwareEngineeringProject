@@ -1,6 +1,5 @@
 package main.java.server;
 
-import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import main.grpc.ComputeRequest;
 import main.grpc.ComputeResponse;
@@ -9,10 +8,8 @@ import main.java.ComputeEngine;
 import main.java.DataStore;
 import main.java.DigitChains;
 import main.grpc.ComputationServiceGrpc;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ComputationServiceImpl extends ComputationServiceGrpc.ComputationServiceImplBase {
     

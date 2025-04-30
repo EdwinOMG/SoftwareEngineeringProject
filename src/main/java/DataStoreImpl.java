@@ -1,11 +1,13 @@
 package main.java;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+
+import main.grpc.NumberChain;
 
 public class DataStoreImpl implements DataStore {
 
@@ -49,22 +51,28 @@ public class DataStoreImpl implements DataStore {
     	throw new RuntimeException("Failed to append");
     }
 }
-    
+
     @Override
-    public OutputResult writeResults(String filePath, DigitChains chains, String delimiter) {
-        try {
+    public OutputResult writeResults(String filePath, List<NumberChain> list, String delimiter) {
+    	try {
             List<String> lines = new ArrayList<>();
-            for (Iterable<Integer> chain : chains) {
+            for (NumberChain chain : list) {
                 StringBuilder sb = new StringBuilder();
-                for (Integer num : chain) {
-                    sb.append(num).append(delimiter);
+                for (int i = 0; i < chain.getNumbersCount(); i++) {
+                    sb.append(chain.getNumbers(i));
+                    if (i < chain.getNumbersCount() - 1) {
+                        sb.append(delimiter);
+                    }
                 }
-                lines.add(sb.substring(0, sb.length() - delimiter.length()));
+                lines.add(sb.toString());
             }
-            
-            // Write to file (using Java NIO)
-            Files.write(Paths.get(filePath), lines, StandardOpenOption.CREATE);
-            
+            try {
+            java.nio.file.Files.write(java.nio.file.Paths.get(filePath), lines);
+            } catch (FileNotFoundException e) {
+            	System.out.println("Error finding file during writeResults: " + e);
+            } catch (IOException e) {
+            	System.out.println("General I/O error writing results: " + e);
+            }
             return new OutputResult() {
                 @Override
                 public ShowResultStatus getStatus() {

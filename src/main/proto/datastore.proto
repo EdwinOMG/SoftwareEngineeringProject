@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto2";
 
 option java_multiple_files = true;
 option java_package = "main.grpc";
@@ -6,24 +6,19 @@ option java_outer_classname = "DataStoreProto";
 
 import "computation.proto";
 
-service DataStoreService {
-    rpc Read (ReadRequest) returns (ReadResponse);
-    rpc Append (AppendRequest) returns (AppendResponse);
-}
-
 message ReadRequest {
-    string file_path = 1;
+    required string file_path = 1;
 }
 
 message ReadResponse {
     repeated int32 numbers = 1;
-    string error = 2;
+    optional string error = 2;
 }
 
 message AppendRequest {
-    string file_path = 1;
+    required string file_path = 1;
     repeated NumberChain chains = 2;
-    string delimiter = 3;
+    required string delimiter = 3;
 }
 
 message AppendResponse {
@@ -31,6 +26,11 @@ message AppendResponse {
         SUCCESS = 0;
         FAILURE = 1;
     }
-    Status status = 1;
-    string error = 2;
+    required Status status = 1;
+    optional string error = 2;
+}
+
+service DataStoreService {
+    rpc Read (ReadRequest) returns (ReadResponse);
+    rpc Append (AppendRequest) returns (AppendResponse);
 }

@@ -2,6 +2,9 @@ package project.annotations;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyChar;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,50 +31,44 @@ import main.java.DigitChains;
 import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
+import main.java.server.DataStoreClient;
 
 
 public class TestMultiUser {
-	
-	// TODO 1: change the type of this variable to the name you're using for your @NetworkAPI
-	// interface
-	private ComputationHandler coordinator;
-	private ComputeEngine mockEngine;
-	private DataStore mockStore;
-	
-	@BeforeEach
-	public void initializeComputeEngine() {
-		
-		//TODO 2: create an instance of the implementation of your @NetworkAPI; this is the component
-		// that the user will make requests to
-		// Store it in the 'coordinator' instance variable
-		
-		mockEngine = mock(ComputeEngine.class);
-		mockStore = mock(DataStore.class);
-		
-		 when(mockStore.read(any(InputConfig.class)))
-         .thenReturn(List.of(1, 15, 10, 5, 2, 3, 8));
-     
-     when(mockEngine.compute(any(Iterable.class)))
-         .thenReturn(new DigitChains(List.of(
-             List.of(1),
-             List.of(15, 26, 40, 16, 37, 58, 89),
-             List.of(10, 1),
-             List.of(5, 25, 29, 85, 89),
-             List.of(2, 4, 16, 37, 58, 89),
-             List.of(3, 9, 81, 65, 61, 37, 58, 89),
-             List.of(8, 64, 52, 28, 85, 89)
-         )));
-     
-     when(mockStore.appendResult(any(OutputConfig.class), any(DigitChains.class), anyChar()))
-         .thenReturn(new OutputResult() {
-             @Override
-             public OutputResult.ShowResultStatus getStatus() {
-                 return OutputResult.ShowResultStatus.SUCCESS;
-             }
-         });
-     
-     this.coordinator = new ComputationHandlerImpl(mockEngine, mockStore);
- }
+    private ComputationHandler coordinator;
+    private ComputeEngine mockEngine;
+    private DataStoreClient mockStore;
+    
+    @BeforeEach
+    public void initializeComputeEngine() throws IOException {
+        mockEngine = mock(ComputeEngine.class);
+        mockStore = mock(DataStoreClient.class);
+        
+        // Mock readFile
+        try {
+			when(mockStore.readFile(anyString()))
+			    .thenReturn(List.of(1, 15, 10, 5, 2, 3, 8));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        // Mock compute
+        when(mockEngine.compute(any(Iterable.class)))
+            .thenReturn(new DigitChains(List.of(
+                List.of(1),
+                List.of(15, 26, 40, 16, 37, 58, 89),
+                List.of(10, 1),
+                List.of(5, 25, 29, 85, 89),
+                List.of(2, 4, 16, 37, 58, 89),
+                List.of(3, 9, 81, 65, 61, 37, 58, 89),
+                List.of(8, 64, 52, 28, 85, 89)
+            )));
+        
+        doNothing().when(mockStore).writeFile(anyString(), anyList(), anyString());
+       
+        
+        this.coordinator = new ComputationHandlerImpl(mockEngine, mockStore);
+    }
 
 	@Test
 	public void compareMultiAndSingleThreaded() throws Exception {

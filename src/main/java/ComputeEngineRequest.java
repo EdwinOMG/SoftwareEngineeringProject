@@ -1,22 +1,18 @@
 package main.java;
 
 public class ComputeEngineRequest {
-    private static final char DEFAULT_DELIMITER = ';';
     private InputConfig input;
     private OutputConfig output;
-    private final char delimiter;
+    private final String delimiter;
 
-    public ComputeEngineRequest(InputConfig input, OutputConfig output) {
-        this(input, output, DEFAULT_DELIMITER);
-    }
-
-    public ComputeEngineRequest(InputConfig input, OutputConfig output, char delimiter) {
+    
+    public ComputeEngineRequest(InputConfig input, OutputConfig output, String c) {
         this.input = input;
         this.output = output;
-        this.delimiter = delimiter;
+        this.delimiter = c;
     }
 
-    public char getDelimiter() {
+    public String getDelimiter() {
         return delimiter;
     }
 

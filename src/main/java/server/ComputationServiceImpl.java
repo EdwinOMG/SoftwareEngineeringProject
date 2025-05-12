@@ -1,68 +1,79 @@
 package main.java.server;
 
 import io.grpc.stub.StreamObserver;
-import main.grpc.ComputeRequest;
-import main.grpc.ComputeResponse;
-import main.grpc.NumberChain;
-import main.java.ComputeEngine;
-import main.java.DataStore;
-import main.java.DigitChains;
-import main.grpc.ComputationServiceGrpc;
+import main.grpc.*;
+import main.java.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ComputationServiceImpl extends ComputationServiceGrpc.ComputationServiceImplBase {
     
-    private final ComputeEngine computeEngine;
-    private final DataStore dataStore;
+    private final ComputationHandler computationHandler;
     
-    public ComputationServiceImpl(ComputeEngine computeEngine, DataStore dataStore) {
-        this.computeEngine = computeEngine;
-        this.dataStore = dataStore;
+    public ComputationServiceImpl(ComputationHandler computationHandler) {
+        this.computationHandler = computationHandler;
     }
 
     @Override
     public void compute(ComputeRequest request, StreamObserver<ComputeResponse> responseObserver) {
         try {
-            // 1. Validate request
-            if (!request.hasNumbers() && request.getInputFile().isEmpty()) {
-                throw new IllegalArgumentException("Either numbers or input file must be provided");
-            }
-
-            // 2. Process input
-            Iterable<Integer> numbers = request.hasNumbers() 
-                ? request.getNumbers().getNumbersList()
-                : dataStore.read(request.getInputFile());
-
-            // 3. Execute computation
-         // In your service implementation
-            DigitChains chains = computeEngine.compute(numbers);
-
-            // Convert to protobuf format
-            List<NumberChain> protoChains = new ArrayList<>();
-            for (Iterable<Integer> chain : chains) {
-                NumberChain.Builder chainBuilder = NumberChain.newBuilder();
-                chain.forEach(chainBuilder::addNumbers);
-                protoChains.add(chainBuilder.build());
-            }
-
-            // Build response
-            responseObserver.onNext(ComputeResponse.newBuilder()
-                .setStatus(ComputeResponse.Status.SUCCESS)
-                .addAllChains(protoChains)
-                .build());
-            
-        } catch (IllegalArgumentException e) {
-            responseObserver.onNext(ComputeResponse.newBuilder()
-                .setStatus(ComputeResponse.Status.INVALID_INPUT)
-                .setMessage(e.getMessage())
-                .build());
+            ComputeEngineRequest domainRequest = toDomainRequest(request);
+            ComputeEngineResult result = computationHandler.compute(domainRequest);
+            responseObserver.onNext(toGrpcResponse(result));
         } catch (Exception e) {
-            responseObserver.onNext(ComputeResponse.newBuilder()
-                .setStatus(ComputeResponse.Status.COMPUTATION_ERROR)
-                .setMessage("Processing failed: " + e.getMessage())
-                .build());
+            responseObserver.onNext(errorResponse(
+                e instanceof IllegalArgumentException ? 
+                    ComputeResponse.Status.INVALID_INPUT :
+                    ComputeResponse.Status.COMPUTATION_ERROR,
+                e
+            ));
+        } finally {
+            responseObserver.onCompleted();
         }
-        responseObserver.onCompleted();
+    }
+
+    private ComputeEngineRequest toDomainRequest(ComputeRequest request) {
+        InputConfig input = new InputConfig() {
+            @Override 
+            public List<Integer> getInput() {
+                return request.hasNumbers() ? request.getNumbers().getNumbersList() : null;
+            }
+            @Override 
+            public String getFilePath() {
+                return request.hasNumbers() ? null : request.getInputFile();
+            }
+        };
+        
+        OutputConfig output = new OutputConfig() {
+            @Override 
+            public String getFilePath() {
+                return request.getOutputFile();
+            }
+            @Override
+            public void writeResults(Iterable<NumberChain> chains, String delimiter) {}
+        };
+        
+        String delimiter = request.getDelimiter().isEmpty() ? ";" : request.getDelimiter();
+        return new ComputeEngineRequest(input, output, delimiter);
+    }
+
+    private ComputeResponse toGrpcResponse(ComputeEngineResult result) {
+        ComputeResponse.Builder builder = ComputeResponse.newBuilder()
+            .setStatus(result.getStatus() == ComputeEngineResult.ComputeEngineResultStatus.SUCCESS 
+                ? ComputeResponse.Status.SUCCESS 
+                : ComputeResponse.Status.COMPUTATION_ERROR);
+        
+        if (result.getStatus() == ComputeEngineResult.ComputeEngineResultStatus.FAIL) {
+            builder.setMessage(result.getFailureMessage());
+        }
+        
+        return builder.build();
+    }
+
+    private ComputeResponse errorResponse(ComputeResponse.Status status, Exception e) {
+        return ComputeResponse.newBuilder()
+            .setStatus(status)
+            .setMessage(e.getMessage())
+            .build();
     }
 }

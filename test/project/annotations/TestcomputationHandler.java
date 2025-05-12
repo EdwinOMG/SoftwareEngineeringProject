@@ -37,7 +37,7 @@ public class TestcomputationHandler {
 	public void testComputeReturnsSuccess() {
 		InputConfig inputConfig = mock(InputConfig.class);
 		OutputConfig outputConfig = mock(OutputConfig.class);
-		ComputeEngineRequest request = new ComputeEngineRequest(inputConfig, outputConfig);
+		ComputeEngineRequest request = new ComputeEngineRequest(inputConfig, outputConfig, ";");
 		
 		when(computationHandler.compute(request)).thenReturn(ComputeEngineResult.SUCCESS);
 		

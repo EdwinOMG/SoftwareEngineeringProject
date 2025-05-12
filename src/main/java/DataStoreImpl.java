@@ -29,27 +29,34 @@ public class DataStoreImpl implements DataStore {
     }
 
     @Override
-    public OutputResult appendResult(OutputConfig outputConfig, DigitChains chains, char delimiter) {
+    public OutputResult appendResult(OutputConfig outputConfig, DigitChains chains, String delimiter) {
        if (outputConfig == null || chains == null) {
     	   throw new IllegalArgumentException("OutputConfig and DigitChains can't be null");
        }
        try {
+    	List<NumberChain> numberChains = new ArrayList<>();
     	for (Iterable<Integer> chain : chains) {
-            for (Integer number : chain) {
-                outputConfig.writeOutput(number); // Write each number to the output config
-                outputConfig.writeOutput((int) delimiter); // Write the delimiter as an integer
-            }
-        }
-
-        return new OutputResult() {
-            @Override
-            public ShowResultStatus getStatus() {
-                return ShowResultStatus.SUCCESS;
-            }
-        };
-    } catch (Exception e) {
-    	throw new RuntimeException("Failed to append");
-    }
+    		NumberChain.Builder builder = NumberChain.newBuilder();
+    		chain.forEach(builder::addNumbers);
+    		numberChains.add(builder.build());
+    	}
+    	
+    	outputConfig.writeResults(numberChains, delimiter);
+    	
+    	return new OutputResult() {
+    		@Override 
+    		public ShowResultStatus getStatus() {
+    			return ShowResultStatus.SUCCESS;
+    		}
+    	};
+       } catch (IOException e) {
+    	   return new OutputResult() {
+    		   @Override
+    		   public ShowResultStatus getStatus() {
+    			   return ShowResultStatus.FAILURE;
+    		   }
+    	   };
+       }
 }
 
     @Override
@@ -86,7 +93,7 @@ public class DataStoreImpl implements DataStore {
     
     
     @Override
-    public Iterable<Integer> read(String filePath) {
+    public Iterable<Integer> readFile(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             throw new IllegalArgumentException("File path cannot be null or empty");
         }

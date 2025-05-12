@@ -25,6 +25,12 @@ sourceSets {
             ]
         }
     }
+test {
+        java {
+            // Include both the default test directory and any custom directories
+            srcDirs = ['src/test/java', 'test/project/annotations']
+        }
+    }
 }
 
 repositories {
@@ -34,7 +40,7 @@ repositories {
 test {
     useJUnitPlatform()
     filter {
-        excludeTestsMatching "project.annotations.Assignment*"
+        //excludeTestsMatching "project.annotations.Assignment*"
         setFailOnNoMatchingTests(false)
     }
 }

@@ -1,5 +1,6 @@
 package main.java;
 
+import main.grpc.NumberChain;
 import main.java.project.annotations.ProcessAPIPrototype;
 
 import java.util.ArrayList;
@@ -9,26 +10,61 @@ public class PrototypeDataStore {
 
     @ProcessAPIPrototype
     public void prototype(DataStore dataStore) {
+        // Create input with numbers
         List<Integer> inputNumbers = List.of(44, 32, 15);
-        InputConfig inputConfig = () -> inputNumbers;
-        List<Integer> outputData = new ArrayList<>();
-        OutputConfig outputConfig = result -> outputData.add(	result);
-        char delimiter = ';';
-
-        Iterable<Integer> readData = dataStore.read(inputConfig);
-        DigitChains chains = new DigitChains(List.of(readData)); // Wrap the read data in DigitChains
-
-        OutputResult outputResult = dataStore.appendResult(outputConfig, chains, delimiter);
-
-        if (outputResult.getStatus() != OutputResult.ShowResultStatus.SUCCESS) {
-            System.out.println("FAILED");
-        } else {
-            System.out.println("SUCCESS");
-            System.out.println("Output Data:");
-            for (Integer number : outputData) {
-                System.out.print(number + " ");
+        InputConfig inputConfig = new InputConfig() {
+            @Override
+            public List<Integer> getInput() {
+                return inputNumbers;
             }
-            System.out.println();
+            
+            @Override
+            public String getFilePath() {
+                return null; // Not using file input
+            }
+        };
+
+        // Create output that collects results
+        List<NumberChain> outputChains = new ArrayList<>();
+        OutputConfig outputConfig = new OutputConfig() {
+            @Override
+            public void writeResults(Iterable<NumberChain> chains, String delimiter) {
+                chains.forEach(outputChains::add);
+            }
+            
+            @Override
+            public String getFilePath() {
+                return null; // Not using file output
+            }
+        };
+
+        String delimiter = ";";
+
+        try {
+            // Read data
+            Iterable<Integer> readData = dataStore.read(inputConfig);
+            
+            // Convert to DigitChains (single chain containing all numbers)
+            DigitChains chains = new DigitChains(List.of(
+                () -> readData.iterator()
+            ));
+
+            // Append results
+            OutputResult outputResult = dataStore.appendResult(outputConfig, chains, delimiter);
+
+            if (outputResult.getStatus() == OutputResult.ShowResultStatus.SUCCESS) {
+                System.out.println("SUCCESS");
+                System.out.println("Output Chains:");
+                outputChains.forEach(chain -> {
+                    System.out.print("Chain: ");
+                    chain.getNumbersList().forEach(num -> System.out.print(num + " "));
+                    System.out.println();
+                });
+            } else {
+                System.out.println("FAILED");
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }

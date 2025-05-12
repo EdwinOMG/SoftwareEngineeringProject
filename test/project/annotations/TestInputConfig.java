@@ -17,4 +17,12 @@ public class TestInputConfig implements InputConfig {
     public List<Integer> getInput() {
         return inputValues;
     }
+
+
+	@Override
+	public String getFilePath() {
+		return null;
+	}
+    
+     
 }

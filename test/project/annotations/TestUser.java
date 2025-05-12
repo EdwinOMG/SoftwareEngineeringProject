@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.stream.Collectors;
 
+import main.grpc.NumberChain;
 import main.java.ComputationHandler;
 import main.java.ComputeEngineRequest;
 import main.java.ComputeEngineResult;
@@ -24,7 +25,7 @@ public class TestUser {
 	}
 
 	public void run(String outputPath) {
-		char delimiter = ';';
+		String delimiter = ";";
 		String inputPath = "test/project.annotations" + File.separatorChar + "testInputFile.test";
 		
 		// TODO 4: Call the appropriate method(s) on the coordinator to get it to
@@ -50,12 +51,19 @@ public class TestUser {
 	                throw new RuntimeException("Invalid number format in input file", e);
 	            }
 	        }
+
+			@Override
+			public String getFilePath() {
+				// TODO Auto-generated method stub
+				return null;
+			}
 	    };
 	    
 	    OutputConfig outputConfig = new OutputConfig() {
 	        @Override
-	        public void writeOutput(Integer output) {
+	        public void writeResults(Iterable<NumberChain> chains, String delimiter) {
 	            try {
+	            	Integer output = 5;
 	                Files.writeString(
 	                    Paths.get(outputPath),
 	                    output.toString() + delimiter,
@@ -66,6 +74,11 @@ public class TestUser {
 	                throw new RuntimeException("Failed to write to output file: " + outputPath, e);
 	            }
 	        }
+
+			@Override
+			public String getFilePath() {
+				return null;
+			}
 	    };
 	    
 	    ComputeEngineRequest request = new ComputeEngineRequest(inputConfig, outputConfig, delimiter);

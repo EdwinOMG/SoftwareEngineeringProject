@@ -52,13 +52,13 @@ public class TestDataStore {
         DigitChains mockChains = new DigitChains(List.of(List.of(44)));
 
         // Stub the appendResult method to return the mock output result
-        when(dataStore.appendResult(mockOutputConfig, mockChains, ';')).thenReturn(mockOutputResult);
+        when(dataStore.appendResult(mockOutputConfig, mockChains, ";")).thenReturn(mockOutputResult);
 
         // Stub the getStatus method to return SUCCESS
         when(mockOutputResult.getStatus()).thenReturn(OutputResult.ShowResultStatus.SUCCESS);
 
         // Act: Call the appendResult method
-        OutputResult result = dataStore.appendResult(mockOutputConfig, mockChains, ';');
+        OutputResult result = dataStore.appendResult(mockOutputConfig, mockChains, ";");
 
         // Assert: Verify the result
         assertNotNull("Result should not be null", result);

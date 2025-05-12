@@ -1,9 +1,11 @@
 package project.annotations;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.grpc.NumberChain;
 import main.java.OutputConfig;
 
 public class TestOutputConfig implements OutputConfig {
@@ -18,5 +20,16 @@ public class TestOutputConfig implements OutputConfig {
     public Iterable<Integer> getOutput() {
         return outputValues;
     }
+
+	@Override
+	public String getFilePath() {
+		return null;
+	}
+
+	@Override
+	public void writeResults(Iterable<NumberChain> chains, String delimiter) throws IOException {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

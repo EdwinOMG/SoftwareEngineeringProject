@@ -9,8 +9,8 @@ import main.java.project.annotations.ProcessAPI;
 @ProcessAPI
 public interface DataStore {
     Iterable<Integer> read(InputConfig inputConfig);
-    OutputResult appendResult(OutputConfig output, DigitChains chains, char delimiter);
+    OutputResult appendResult(OutputConfig output, DigitChains chains, String string);
     OutputResult writeResults(String filePath, List<NumberChain> list, String delimiter); 
-    Iterable<Integer> read(String filePath); // THIS IS FOR FILEPATH
+    Iterable<Integer> readFile(String filePath); // THIS IS FOR FILEPATH
 
 }

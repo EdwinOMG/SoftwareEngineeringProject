@@ -1,5 +1,6 @@
 package project.annotations;
 
+import main.grpc.NumberChain;
 import main.java.DataStore;
 import main.java.DataStoreImpl;
 import main.java.DigitChains;
@@ -7,6 +8,7 @@ import main.java.InputConfig;
 import main.java.OutputConfig;
 import main.java.OutputResult;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,43 +16,49 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
 public class TestIntegDataStore {
 
     @Test
-    public void testDataStoreAppendResult() {
-        // Create an instance of DataStoreImpl
+    public void testDataStoreAppendResult() throws IOException {
         DataStore dataStore = new DataStoreImpl();
-
-        // Simulate input data (e.g., a list of numbers to process)
         List<Integer> inputData = List.of(44, 32, 15);
+        
+        InputConfig inputConfig = new InputConfig() {
+            @Override
+            public List<Integer> getInput() {
+                return inputData;
+            }
+            @Override
+            public String getFilePath() {
+                return null;
+            }
+        };
 
-        // Create an InputConfig implementation inline
-        InputConfig inputConfig = () -> inputData;
-
-        // Create a list to store the output data
         List<Integer> outputData = new ArrayList<>();
+        
+        OutputConfig outputConfig = new OutputConfig() {
+            @Override
+            public String getFilePath() {
+                return null; // or actual file path if needed
+            }
+            @Override
+            public void writeResults(Iterable<NumberChain> chains, String delimiter) throws IOException {
+                for (NumberChain chain : chains) {
+                    outputData.addAll(chain.getNumbersList());
+                }
+            }
+        };
 
-        // Create an OutputConfig implementation inline using a lambda
-        OutputConfig outputConfig = result -> outputData.add(result);
-
-        // Define the delimiter
-        char delimiter = ';'; // Example delimiter
-
-        // Simulate creating DigitChains
         List<Iterable<Integer>> chains = new ArrayList<>();
         for (Integer number : inputData) {
-            List<Integer> chain = new ArrayList<>();
-            chain.add(number); // Example: Add the number to the chain
-            chains.add(chain);
+            chains.add(List.of(number));
         }
         DigitChains digitChains = new DigitChains(chains);
 
-        // Append the results to the output config
-        OutputResult outputResult = dataStore.appendResult(outputConfig, digitChains, delimiter);
-
-        // Verify the result
-        assertEquals("OutputResult status should be SUCCESS", OutputResult.ShowResultStatus.SUCCESS, outputResult.getStatus());
-        assertFalse("Output shouldn't be empty", outputData.isEmpty());
+        OutputResult outputResult = dataStore.appendResult(outputConfig, digitChains, ";");
+        
+        assertEquals(OutputResult.ShowResultStatus.SUCCESS, outputResult.getStatus());
+        assertFalse(outputData.isEmpty());
+        assertEquals(3, outputData.size());
     }
 }

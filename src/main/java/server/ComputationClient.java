@@ -33,7 +33,7 @@ public class ComputationClient {
 
     public ComputeResponse computeFromDataStore(String inputFile, String outputFile, String delimiter) {
         DataStore dataStore = new DataStoreImpl();
-        Iterable<Integer> numbers = dataStore.read(inputFile);
+        Iterable<Integer> numbers = dataStore.readFile(inputFile);
         ComputeResponse response = computeNumbers(numbers, outputFile, delimiter);
         dataStore.writeResults(outputFile, response.getChainsList(), delimiter); // FIX WRITERESULTS
         

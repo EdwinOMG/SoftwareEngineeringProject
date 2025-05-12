@@ -1,17 +1,28 @@
 package main.java.server;
 
 import io.grpc.stub.StreamObserver;
-import main.grpc.*;
-import main.java.*;
+import main.java.ComputationHandler;
+import main.java.ComputeEngineRequest;
+import main.java.ComputeEngineResult;
+import main.java.InputConfig;
+import main.java.OutputConfig;
+import main.grpc.ComputationServiceGrpc;
+import main.grpc.ComputeRequest;
+import main.grpc.ComputeResponse;
+import main.grpc.NumberChain;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ComputationServiceImpl extends ComputationServiceGrpc.ComputationServiceImplBase {
     
     private final ComputationHandler computationHandler;
+    private final DataStoreClient dataStoreClient;  // Add this field
     
-    public ComputationServiceImpl(ComputationHandler computationHandler) {
+    public ComputationServiceImpl(ComputationHandler computationHandler, DataStoreClient dataStoreClient) {
         this.computationHandler = computationHandler;
+        this.dataStoreClient = dataStoreClient;  // Initialize here
     }
 
     @Override
@@ -49,8 +60,21 @@ public class ComputationServiceImpl extends ComputationServiceGrpc.ComputationSe
             public String getFilePath() {
                 return request.getOutputFile();
             }
+            
             @Override
-            public void writeResults(Iterable<NumberChain> chains, String delimiter) {}
+            public void writeResults(Iterable<NumberChain> chains, String delimiter) throws IOException {
+                if (dataStoreClient != null && getFilePath() != null) {
+                    List<NumberChain> chainList = new ArrayList<>();
+                    chains.forEach(chainList::add);
+                    
+                    // Write to file using the DataStoreClient
+                    dataStoreClient.writeFile(
+                        getFilePath(),
+                        chainList,
+                        delimiter
+                    );
+                }
+            }
         };
         
         String delimiter = request.getDelimiter().isEmpty() ? ";" : request.getDelimiter();

@@ -2,10 +2,17 @@ package main.java.server;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import io.grpc.*;
+
+import io.grpc.Grpc;
+import io.grpc.InsecureServerCredentials;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.Server;
 import io.grpc.protobuf.services.ProtoReflectionService;
-import main.java.*;
-import main.grpc.*;
+import main.grpc.AppendRequest;
+import main.grpc.DataStoreServiceGrpc;
+import main.java.ComputationHandlerImpl;
+import main.java.ComputeEngineImpl;
 
 public class ComputationServer {
     private Server server;
@@ -24,35 +31,17 @@ public class ComputationServer {
                 DataStoreServiceGrpc.newBlockingStub(dataStoreChannel);
         
         // Create DataStoreClient implementation
-        DataStoreClient dataStoreClient = new DataStoreClient(dataStoreChannel) {
-            @Override
-            public Iterable<Integer> readFile(String path) {
-                return dataStoreStub.read(
-                    ReadRequest.newBuilder().setFilePath(path).build()
-                ).getNumbersList();
-            }
-            
-            @Override
-            public void writeFile(String path, Iterable<NumberChain> chains, String delimiter) {
-                dataStoreStub.append(
-                    AppendRequest.newBuilder()
-                        .setFilePath(path)
-                        .addAllChains(chains)
-                        .setDelimiter(delimiter)
-                        .build()
-                );
-            }
-        };
+        DataStoreClient dataStoreClient = new DataStoreClient(dataStoreChannel);
         
         // Create handler
-        ComputationHandler handler = new ComputationHandlerImpl(
+        ComputationHandlerImpl handler = new ComputationHandlerImpl(
                 new ComputeEngineImpl(),
                 dataStoreClient
         );
         
         // Start server
         server = Grpc.newServerBuilderForPort(port, InsecureServerCredentials.create())
-                .addService(new ComputationServiceImpl(handler))
+                .addService(new ComputationServiceImpl(handler, dataStoreClient))
                 .addService(ProtoReflectionService.newInstance())
                 .build()
                 .start();
